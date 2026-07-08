@@ -4,26 +4,23 @@ namespace WorkoutApplication.Modules.Users.Features.GetUser
 {
     public static class GetUser
     {
-        public record Query(Guid UserId);
 
-        public record Response(
-            Guid Id,
-            string Username,
-            string Email
-        );
 
-        public static Response Handle(Query query)
+        public static GetUserResponse Handle(GetUserRequest query)
         {
             // Mock data
             var user = new User(
-                Guid.NewGuid(),
+                2,
                 "Frederik",
-                "frederik@example.com"
+                "Gonzales",
+                "frederik@example.com",
+                "1212ffdswe112331221"
             );
 
-            return new Response(
+            return new GetUserResponse(
                 user.Id,
-                user.Username,
+                user.FirstName,
+                user.LastName,
                 user.Email
             );
         }

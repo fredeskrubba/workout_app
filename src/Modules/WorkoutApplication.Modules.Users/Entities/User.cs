@@ -2,14 +2,20 @@
 
 public class User
 {
-    public Guid Id { get; init; }
-    public string Username { get; init; }
+    public int Id { get; init; }
+    public string FirstName { get; init; }
+
+    public string LastName { get; init; }
     public string Email { get; init; }
 
-    public User(Guid id, string username, string email)
+    public string HashedPassword { get; init; }
+
+    public User(int id, string firstName, string lastName, string email, string hashedPassword)
     {
         Id = id;
-        Username = username;
+        FirstName = firstName;
+        LastName = lastName;
         Email = email;
+        HashedPassword = hashedPassword;
     }
 }

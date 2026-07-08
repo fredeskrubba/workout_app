@@ -8,9 +8,9 @@ public static class GetUserEndpoint
 {
     public static void MapGetUserEndpoint(this IEndpointRouteBuilder app)
     {
-        app.MapGet("/users/{id:guid}", (Guid id) =>
+        app.MapGet("/users/{id:int}", (int id) =>
         {
-            var query = new GetUser.Query(id);
+            var query = new GetUserRequest(id);
 
             var result = GetUser.Handle(query);
 
