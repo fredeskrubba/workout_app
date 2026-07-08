@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Modules/WorkoutApplication.Modules.Users/WorkoutApplication.Modules.Users.csproj" Id="b75c6e68-a108-45ad-9ad2-f5651e98c0ca" />
+  <Project Path="src/WorkoutApplication/WorkoutApplication.csproj" />
+</Solution>
