@@ -1,3 +1,4 @@
+using WorkoutApplication.Modules.Users.Features.CreateUser;
 using WorkoutApplication.Modules.Users.Features.GetUser;
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,5 +22,5 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.MapGetUserEndpoint();
-
+app.MapCreateUserEndpoint();
 app.Run();

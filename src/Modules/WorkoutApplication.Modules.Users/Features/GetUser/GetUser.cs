@@ -1,4 +1,4 @@
-﻿using WorkoutApp.Modules.Users.Domain;
+﻿using WorkoutApplication.Modules.Users.Entities;
 
 namespace WorkoutApplication.Modules.Users.Features.GetUser
 {
@@ -13,8 +13,7 @@ namespace WorkoutApplication.Modules.Users.Features.GetUser
                 2,
                 "Frederik",
                 "Gonzales",
-                "frederik@example.com",
-                "1212ffdswe112331221"
+                "frederik@example.com"
             );
 
             return new GetUserResponse(

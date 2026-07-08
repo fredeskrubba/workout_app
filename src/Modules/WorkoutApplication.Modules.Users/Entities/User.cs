@@ -1,4 +1,4 @@
-﻿namespace WorkoutApp.Modules.Users.Domain;
+﻿namespace WorkoutApplication.Modules.Users.Entities;
 
 public class User
 {
@@ -8,14 +8,14 @@ public class User
     public string LastName { get; init; }
     public string Email { get; init; }
 
-    public string HashedPassword { get; init; }
+    public string HashedPassword { get; set; } = string.Empty;
 
-    public User(int id, string firstName, string lastName, string email, string hashedPassword)
+    public User(int id, string firstName, string lastName, string email)
     {
         Id = id;
         FirstName = firstName;
         LastName = lastName;
         Email = email;
-        HashedPassword = hashedPassword;
+
     }
 }
