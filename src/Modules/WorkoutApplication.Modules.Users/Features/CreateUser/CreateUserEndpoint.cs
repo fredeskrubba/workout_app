@@ -9,11 +9,15 @@ namespace WorkoutApplication.Modules.Users.Features.CreateUser
     {
         public static void MapCreateUserEndpoint(this IEndpointRouteBuilder app)
         {
-            app.MapPost("/user", (CreateUserRequest request) =>
+            app.MapPost("/user", async (CreateUser handler, CreateUserRequest request) =>
             {
              
-                var result = CreateUser.Handle(request);
+                var result = await handler.Handle(request);
 
+                if(result == null)
+                {
+                    return Results.BadRequest("Something went wrong");
+                }
                 return Results.Ok(result);
             });
         }

@@ -1,5 +1,9 @@
+using Microsoft.EntityFrameworkCore;
+using WorkoutApplication.Modules.Users;
+using WorkoutApplication.Modules.Users.Data;
 using WorkoutApplication.Modules.Users.Features.CreateUser;
 using WorkoutApplication.Modules.Users.Features.GetUser;
+using WorkoutApplication.Modules.Users.Features.LoginUser;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,6 +11,18 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+builder.Services.AddScoped<LoginUser>();
+builder.Services.AddScoped<GetUser>();
+builder.Services.AddScoped<CreateUser>();
+
+var connectionString = builder.Configuration
+    .GetConnectionString("DefaultConnection");
+
+Console.WriteLine(connectionString);
+
+
+builder.Services.AddUsersModule(builder.Configuration);
+
 
 var app = builder.Build();
 
@@ -21,6 +37,10 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
 app.MapGetUserEndpoint();
 app.MapCreateUserEndpoint();
+app.MapLoginUserEndpoint();
+
+
 app.Run();

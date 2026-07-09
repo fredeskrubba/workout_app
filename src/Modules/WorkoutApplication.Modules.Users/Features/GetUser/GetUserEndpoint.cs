@@ -8,11 +8,16 @@ public static class GetUserEndpoint
 {
     public static void MapGetUserEndpoint(this IEndpointRouteBuilder app)
     {
-        app.MapGet("/users/{id:int}", (int id) =>
+        app.MapGet("/users/{id:int}", async (GetUser handler, int id) =>
         {
             var query = new GetUserRequest(id);
 
-            var result = GetUser.Handle(query);
+            var result = await handler.Handle(query);
+
+            if(result == null)
+            {
+                return Results.BadRequest("User not found");
+            }
 
             return Results.Ok(result);
         });
