@@ -9,10 +9,10 @@ namespace WorkoutApplication.Modules.Users.Features.LoginUser
     {
         public static void MapLoginUserEndpoint(this IEndpointRouteBuilder app)
         {
-            app.MapPost("/login", (LoginUser handler, LoginUserRequest request) =>
+            app.MapPost("/login", async (LoginUser handler, LoginUserRequest request) =>
             {
                
-                var result = handler.Handle(request);
+                var result = await handler.Handle(request);
 
                 if (result.IsSuccess)
                 {

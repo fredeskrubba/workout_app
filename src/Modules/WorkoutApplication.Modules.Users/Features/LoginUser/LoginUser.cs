@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -7,6 +8,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using WorkoutApplication.Modules.Users.Data;
 using WorkoutApplication.Modules.Users.Entities;
 using WorkoutApplication.Shared.Results;
 namespace WorkoutApplication.Modules.Users.Features.LoginUser
@@ -14,22 +16,24 @@ namespace WorkoutApplication.Modules.Users.Features.LoginUser
     public class LoginUser
     {
         private readonly IConfiguration _configuration;
-        public LoginUser(IConfiguration configuration)
+        private readonly UserDBContext _context;
+        public LoginUser(IConfiguration configuration, UserDBContext context)
         {
             _configuration = configuration;
+            _context = context;
         }
-        public Result<LoginUserResponse> Handle(LoginUserRequest request)
+        public async Task<Result<LoginUserResponse>> Handle(LoginUserRequest request)
         {
-            // need to find user in db to compare the provided hash later
-            User testUser = new("", "", "");
+            
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == request.Email);
 
-            if(new PasswordHasher<User>().VerifyHashedPassword(testUser, testUser.HashedPassword, request.Password) == PasswordVerificationResult.Failed)
+            if (new PasswordHasher<User>().VerifyHashedPassword(user, user.HashedPassword, request.Password) == PasswordVerificationResult.Failed)
             {
                 return Result<LoginUserResponse>.Failure("Wrong password");
                 
             }
 
-            return Result<LoginUserResponse>.Success(new LoginUserResponse(CreateToken(testUser)));
+            return Result<LoginUserResponse>.Success(new LoginUserResponse(CreateToken(user)));
         }
 
         private string CreateToken(User user)
