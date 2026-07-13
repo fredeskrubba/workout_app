@@ -14,11 +14,12 @@ namespace WorkoutApplication.Modules.Users.Features.CreateUser
              
                 var result = await handler.Handle(request);
 
-                if(result == null)
+                if(!result.IsSuccess)
                 {
-                    return Results.BadRequest("Something went wrong");
+                    return Results.BadRequest(result.Error);
                 }
-                return Results.Ok(result);
+
+                return Results.Ok(result.Value);
             });
         }
     }
