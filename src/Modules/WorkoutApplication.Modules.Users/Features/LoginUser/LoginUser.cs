@@ -27,6 +27,11 @@ namespace WorkoutApplication.Modules.Users.Features.LoginUser
             
             var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == request.Email);
 
+            if(user is null)
+            {
+                return Result<LoginUserResponse>.Failure("User not found");
+            }
+
             if (new PasswordHasher<User>().VerifyHashedPassword(user, user.HashedPassword, request.Password) == PasswordVerificationResult.Failed)
             {
                 return Result<LoginUserResponse>.Failure("Wrong password");
