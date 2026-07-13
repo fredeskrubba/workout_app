@@ -481,3 +481,4 @@ $RECYCLE.BIN/
 # Vim temporary swap files
 *.swp
 /src/WorkoutApplication/appsettings.json
+/WorkoutApplication.Shared/Helpers/migrationCommands.txt
