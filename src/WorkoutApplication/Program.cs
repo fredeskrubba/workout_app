@@ -4,6 +4,7 @@ using WorkoutApplication.Modules.Users.Data;
 using WorkoutApplication.Modules.Users.Features.CreateUser;
 using WorkoutApplication.Modules.Users.Features.GetUser;
 using WorkoutApplication.Modules.Users.Features.LoginUser;
+using WorkoutApplication.Modules.Users.Features.DeleteUser;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -14,6 +15,7 @@ builder.Services.AddOpenApi();
 builder.Services.AddScoped<LoginUser>();
 builder.Services.AddScoped<GetUser>();
 builder.Services.AddScoped<CreateUser>();
+builder.Services.AddScoped<DeleteUser>();
 
 var connectionString = builder.Configuration
     .GetConnectionString("DefaultConnection");
@@ -41,6 +43,6 @@ app.MapControllers();
 app.MapGetUserEndpoint();
 app.MapCreateUserEndpoint();
 app.MapLoginUserEndpoint();
-
+app.MapDeleteUserEndpoint();
 
 app.Run();
