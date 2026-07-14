@@ -8,19 +8,19 @@ using WorkoutApplication.Modules.Users.Entities;
 using WorkoutApplication.Modules.Users.Features.GetUser;
 using WorkoutApplication.Modules.Users.Features.LoginUser;
 using WorkoutApplication.Shared.Results;
-using WorkoutApplication.Modules.Users.Helpers;
+
 
 namespace WorkoutApplication.Modules.Users.Features.UpdateUserPassword
 {
     public class UpdateUserPassword
     {
         private readonly UserDBContext _context;
-        private readonly CreateToken _tokenHelper;
+        
 
-        public UpdateUserPassword(UserDBContext context, CreateToken tokenHelper)
+        public UpdateUserPassword(UserDBContext context)
         {
             _context = context;
-            _tokenHelper = tokenHelper;
+           
         }
 
         public async Task<Result<UpdateUserPasswordResponse?>> Handle(UpdateUserPasswordRequest request)

@@ -1,27 +1,27 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using WorkoutApplication.Modules.Users.Data;
 using WorkoutApplication.Modules.Users.Entities;
-using WorkoutApplication.Modules.Users.Helpers;
 using WorkoutApplication.Shared.Results;
+using WorkoutApplication.Modules.Users.Helpers;
+
+
 namespace WorkoutApplication.Modules.Users.Features.LoginUser
 {
     public class LoginUser
     {
-        private readonly IConfiguration _configuration;
+        
         private readonly UserDBContext _context;
-        private readonly CreateToken _tokenHelper;
-        public LoginUser(IConfiguration configuration, UserDBContext context, CreateToken tokenHelper)
+        private readonly TokenHelper _tokenHelper;
+        public LoginUser(UserDBContext context, TokenHelper tokenHelper)
         {
-            _configuration = configuration;
+           
             _context = context;
             _tokenHelper = tokenHelper;
         }
@@ -41,7 +41,21 @@ namespace WorkoutApplication.Modules.Users.Features.LoginUser
                 
             }
 
-            return Result<LoginUserResponse>.Success(new LoginUserResponse(_tokenHelper.Create(user)));
+            
+            var refreshToken = _tokenHelper.GenerateRefreshToken();
+            user.RefreshToken = refreshToken;
+            user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
+
+            await _context.SaveChangesAsync();
+
+            return Result<LoginUserResponse>.Success(new LoginUserResponse(_tokenHelper.CreateToken(user), refreshToken));
         }
+
+
+         
+
+
+        
+
     }
 }

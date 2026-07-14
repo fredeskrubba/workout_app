@@ -17,7 +17,7 @@ namespace WorkoutApplication.Modules.Users.Features.LoginUser
                 if (result.IsSuccess)
                 {
                     
-                    return Results.Ok(result.Value.token);
+                    return Results.Ok(result.Value);
 
                 } else
                 {

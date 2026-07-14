@@ -7,9 +7,10 @@ using WorkoutApplication.Modules.Users.Features.DeleteUser;
 using WorkoutApplication.Modules.Users.Features.GetUser;
 using WorkoutApplication.Modules.Users.Features.LoginUser;
 using WorkoutApplication.Modules.Users.Features.UpdateUserPassword;
-using WorkoutApplication.Modules.Users.Helpers;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using WorkoutApplication.Modules.Users.Features.UpdateRefreshToken;
+using WorkoutApplication.Modules.Users.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,7 +24,8 @@ builder.Services.AddScoped<GetUser>();
 builder.Services.AddScoped<CreateUser>();
 builder.Services.AddScoped<DeleteUser>();
 builder.Services.AddScoped<UpdateUserPassword>();
-builder.Services.AddSingleton<CreateToken>();
+builder.Services.AddScoped<UpdateRefreshToken>();
+
 
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
@@ -40,6 +42,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 
     };
 });
+
+builder.Services.AddSingleton<TokenHelper>();
+
 builder.Services.AddUsersModule(builder.Configuration);
 
 
@@ -62,5 +67,6 @@ app.MapCreateUserEndpoint();
 app.MapLoginUserEndpoint();
 app.MapDeleteUserEndpoint();
 app.MapUpdateUserEndpointEndpoint();
+app.MapUpdateRefreshTokenEndpoint();
 
 app.Run();
