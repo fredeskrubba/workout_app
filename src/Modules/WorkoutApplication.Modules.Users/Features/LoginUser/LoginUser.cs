@@ -10,6 +10,7 @@ using System.Security.Claims;
 using System.Text;
 using WorkoutApplication.Modules.Users.Data;
 using WorkoutApplication.Modules.Users.Entities;
+using WorkoutApplication.Modules.Users.Helpers;
 using WorkoutApplication.Shared.Results;
 namespace WorkoutApplication.Modules.Users.Features.LoginUser
 {
@@ -17,10 +18,12 @@ namespace WorkoutApplication.Modules.Users.Features.LoginUser
     {
         private readonly IConfiguration _configuration;
         private readonly UserDBContext _context;
-        public LoginUser(IConfiguration configuration, UserDBContext context)
+        private readonly CreateToken _tokenHelper;
+        public LoginUser(IConfiguration configuration, UserDBContext context, CreateToken tokenHelper)
         {
             _configuration = configuration;
             _context = context;
+            _tokenHelper = tokenHelper;
         }
         public async Task<Result<LoginUserResponse>> Handle(LoginUserRequest request)
         {
@@ -38,31 +41,7 @@ namespace WorkoutApplication.Modules.Users.Features.LoginUser
                 
             }
 
-            return Result<LoginUserResponse>.Success(new LoginUserResponse(CreateToken(user)));
-        }
-
-        private string CreateToken(User user)
-        {
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, user.FirstName + " " + user.LastName)
-            };
-
-            var key = new SymmetricSecurityKey(
-                   Encoding.UTF8.GetBytes(_configuration["AppSettings:Token"]!)
-            );
-
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512);
-
-            var tokenDescriptor = new JwtSecurityToken(
-                 issuer: _configuration["AppSettings:Issuer"],
-                 audience: _configuration["AppSettings:Audience"],
-                 claims: claims,
-                 expires: DateTime.UtcNow.AddDays(1),
-                 signingCredentials: creds
-            );
-
-            return new JwtSecurityTokenHandler().WriteToken(tokenDescriptor);
+            return Result<LoginUserResponse>.Success(new LoginUserResponse(_tokenHelper.Create(user)));
         }
     }
 }
