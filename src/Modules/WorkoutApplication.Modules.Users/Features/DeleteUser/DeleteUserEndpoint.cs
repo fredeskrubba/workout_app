@@ -20,7 +20,7 @@ namespace WorkoutApplication.Modules.Users.Features.DeleteUser
                 }
 
                 return Results.Ok(result);
-            });
+            }).RequireAuthorization();
         }
     }
 }

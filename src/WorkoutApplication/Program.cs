@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using WorkoutApplication.Modules.Users;
 using WorkoutApplication.Modules.Users.Data;
@@ -7,6 +8,9 @@ using WorkoutApplication.Modules.Users.Features.GetUser;
 using WorkoutApplication.Modules.Users.Features.LoginUser;
 using WorkoutApplication.Modules.Users.Features.UpdateUserPassword;
 using WorkoutApplication.Modules.Users.Helpers;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -21,12 +25,21 @@ builder.Services.AddScoped<DeleteUser>();
 builder.Services.AddScoped<UpdateUserPassword>();
 builder.Services.AddSingleton<CreateToken>();
 
-var connectionString = builder.Configuration
-    .GetConnectionString("DefaultConnection");
 
-Console.WriteLine(connectionString);
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidIssuer = builder.Configuration["AppSettings:Issuer"],
+        ValidateAudience = true,
+        ValidAudience = builder.Configuration["AppSettings:Audience"],
+        ValidateLifetime = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["AppSettings:Token"])),
+        ValidateIssuerSigningKey = true
 
-
+    };
+});
 builder.Services.AddUsersModule(builder.Configuration);
 
 

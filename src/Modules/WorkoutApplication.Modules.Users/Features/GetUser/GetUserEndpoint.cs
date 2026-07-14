@@ -20,6 +20,6 @@ public static class GetUserEndpoint
             }
 
             return Results.Ok(result);
-        });
+        }).RequireAuthorization();
     }
 }
