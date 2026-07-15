@@ -1,19 +1,16 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using WorkoutApplication.Modules.Users.Data;
 using WorkoutApplication.Modules.Users.Entities;
-using WorkoutApplication.Modules.Users.Features.GetUser;
 using WorkoutApplication.Shared.Results;
+using WorkoutApplication.Shared.Data;
+
 namespace WorkoutApplication.Modules.Users.Features.CreateUser
 {
     public class CreateUser
     {
-        private readonly UserDBContext _context;
+        private readonly WorkoutApplicationDBContext _context;
 
-        public CreateUser(UserDBContext context)
+        public CreateUser(WorkoutApplicationDBContext context)
         {
             _context = context;
         }

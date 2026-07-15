@@ -1,15 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Security.Cryptography;
-using System.Text;
-using WorkoutApplication.Modules.Users.Data;
 using WorkoutApplication.Modules.Users.Entities;
-using WorkoutApplication.Shared.Results;
 using WorkoutApplication.Modules.Users.Helpers;
+using WorkoutApplication.Shared.Data;
+using WorkoutApplication.Shared.Results;
 
 
 namespace WorkoutApplication.Modules.Users.Features.LoginUser
@@ -17,9 +11,9 @@ namespace WorkoutApplication.Modules.Users.Features.LoginUser
     public class LoginUser
     {
         
-        private readonly UserDBContext _context;
+        private readonly WorkoutApplicationDBContext _context;
         private readonly TokenHelper _tokenHelper;
-        public LoginUser(UserDBContext context, TokenHelper tokenHelper)
+        public LoginUser(WorkoutApplicationDBContext context, TokenHelper tokenHelper)
         {
            
             _context = context;

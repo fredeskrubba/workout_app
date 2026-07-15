@@ -1,10 +1,6 @@
 ﻿using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using WorkoutApplication.Modules.Users.Features.LoginUser;
 
 namespace WorkoutApplication.Modules.Users.Features.UpdateUserPassword
 {

@@ -4,14 +4,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using WorkoutApplication.Modules.Users.Data;
+using WorkoutApplication.Shared.Data;
 
 #nullable disable
 
-namespace WorkoutApplication.Modules.Users.Migrations
+namespace WorkoutApplication.Shared.Migrations
 {
-    [DbContext(typeof(UserDBContext))]
-    partial class UserDBContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(WorkoutApplicationDBContext))]
+    partial class WorkoutApplicationDBContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -21,6 +21,38 @@ namespace WorkoutApplication.Modules.Users.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("WorkoutApplication.Modules.Sessions.Entities.WorkoutSession", b =>
+                {
+                    b.Property<int>("SessionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("session_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("SessionId"));
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("date");
+
+                    b.Property<int>("DurationSeconds")
+                        .HasColumnType("integer")
+                        .HasColumnName("duration_seconds");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("integer")
+                        .HasColumnName("rating");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("SessionId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("workout_sessions");
+                });
 
             modelBuilder.Entity("WorkoutApplication.Modules.Users.Entities.User", b =>
                 {
@@ -65,6 +97,15 @@ namespace WorkoutApplication.Modules.Users.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("users", (string)null);
+                });
+
+            modelBuilder.Entity("WorkoutApplication.Modules.Sessions.Entities.WorkoutSession", b =>
+                {
+                    b.HasOne("WorkoutApplication.Modules.Users.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

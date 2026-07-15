@@ -1,14 +1,13 @@
-﻿using WorkoutApplication.Modules.Users.Data;
-using Microsoft.EntityFrameworkCore;
-using WorkoutApplication.Modules.Users.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using WorkoutApplication.Shared.Data;
 
 namespace WorkoutApplication.Modules.Users.Features.GetUser
 {
     public class GetUser
     {
-        private readonly UserDBContext _context;
+        private readonly WorkoutApplicationDBContext _context;
 
-        public GetUser(UserDBContext context)
+        public GetUser(WorkoutApplicationDBContext context)
         {
             _context = context;
         }

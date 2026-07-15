@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
-using WorkoutApplication.Modules.Users.Entities;
 
 namespace WorkoutApplication.Modules.Users.Features.CreateUser
 {

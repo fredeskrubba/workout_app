@@ -1,19 +1,13 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using WorkoutApplication.Modules.Users.Data;
-using Microsoft.EntityFrameworkCore;
-using WorkoutApplication.Modules.Users.Entities;
-using WorkoutApplication.Modules.Users.Features.CreateUser;
+﻿using Microsoft.EntityFrameworkCore;
+using WorkoutApplication.Shared.Data;
 
 namespace WorkoutApplication.Modules.Users.Features.DeleteUser
 {
    public class DeleteUser
     {
-        private readonly UserDBContext _context;
+        private readonly WorkoutApplicationDBContext _context;
 
-        public DeleteUser(UserDBContext context)
+        public DeleteUser(WorkoutApplicationDBContext context)
         {
             _context = context;
         }

@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using WorkoutApplication.Modules.Users;
-using WorkoutApplication.Modules.Users.Data;
+using WorkoutApplication.Modules.Sessions;
 using WorkoutApplication.Modules.Users.Features.CreateUser;
 using WorkoutApplication.Modules.Users.Features.DeleteUser;
 using WorkoutApplication.Modules.Users.Features.GetUser;
@@ -11,6 +11,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using WorkoutApplication.Modules.Users.Features.UpdateRefreshToken;
 using WorkoutApplication.Modules.Users.Helpers;
+using WorkoutApplication.Shared.Data;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,9 +46,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 });
 
 builder.Services.AddSingleton<TokenHelper>();
-
-builder.Services.AddUsersModule(builder.Configuration);
-
+builder.Services.AddDbContext<WorkoutApplicationDBContext>(options =>
+            options.UseNpgsql(
+                builder.Configuration.GetConnectionString("DefaultConnection")
+            ));
 
 var app = builder.Build();
 

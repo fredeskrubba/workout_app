@@ -1,17 +1,29 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using WorkoutApplication.Modules.Sessions.Entities;
+using WorkoutApplication.Modules.Users.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using WorkoutApplication.Modules.Users.Entities;
 
-namespace WorkoutApplication.Modules.Users.Data
+namespace WorkoutApplication.Shared.Data
 {
-    public class UserDBContext(DbContextOptions<UserDBContext> options) : DbContext(options)
+    public class WorkoutApplicationDBContext(DbContextOptions<WorkoutApplicationDBContext> options) : DbContext(options)
     {
+        public DbSet<WorkoutSession> WorkoutSessions { get; set; }
         public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<WorkoutSession>()
+                .HasKey(x => x.SessionId);
+
+            modelBuilder.Entity<WorkoutSession>()
+                .HasOne<User>()
+                .WithMany()
+                .HasForeignKey(w => w.UserId);
+
             modelBuilder.Entity<User>()
                 .ToTable("users");
 

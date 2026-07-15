@@ -19,7 +19,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\WorkoutApplication.Shared\WorkoutApplication.Shared.csproj" />
+    <ProjectReference Include="..\Modules\WorkoutApplication.Modules.Sessions\WorkoutApplication.Modules.Sessions.csproj" />
     <ProjectReference Include="..\Modules\WorkoutApplication.Modules.Users\WorkoutApplication.Modules.Users.csproj" />
   </ItemGroup>
+
 
 </Project>

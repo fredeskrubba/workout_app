@@ -1,12 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using WorkoutApplication.Modules.Users.Data;
 using WorkoutApplication.Modules.Users.Entities;
-using WorkoutApplication.Modules.Users.Features.GetUser;
-using WorkoutApplication.Modules.Users.Features.LoginUser;
+using WorkoutApplication.Shared.Data;
 using WorkoutApplication.Shared.Results;
 
 
@@ -14,10 +9,10 @@ namespace WorkoutApplication.Modules.Users.Features.UpdateUserPassword
 {
     public class UpdateUserPassword
     {
-        private readonly UserDBContext _context;
+        private readonly WorkoutApplicationDBContext _context;
         
 
-        public UpdateUserPassword(UserDBContext context)
+        public UpdateUserPassword(WorkoutApplicationDBContext context)
         {
             _context = context;
            
