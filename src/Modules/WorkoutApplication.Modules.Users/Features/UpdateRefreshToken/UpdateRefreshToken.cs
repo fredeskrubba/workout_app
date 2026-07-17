@@ -1,4 +1,5 @@
-﻿using WorkoutApplication.Shared.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using WorkoutApplication.Shared.Entities;
 using WorkoutApplication.Modules.Users.Helpers;
 using WorkoutApplication.Shared.Data;
 using WorkoutApplication.Shared.Results;
@@ -31,7 +32,14 @@ namespace WorkoutApplication.Modules.Users.Features.UpdateRefreshToken
             user.RefreshToken = refreshToken;
             user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
 
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                return Result<UpdateRefreshTokenResponse>.Failure("Something went wrong, see error: " + ex.Message);
+            }
 
             return Result<UpdateRefreshTokenResponse>.Success(new UpdateRefreshTokenResponse(accessToken, refreshToken));
         }

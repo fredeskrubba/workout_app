@@ -30,7 +30,15 @@ namespace WorkoutApplication.Modules.Users.Features.UpdateUserPassword
             var newHashedPassword = new PasswordHasher<User>().HashPassword(user, request.NewPassword);
 
             user.HashedPassword = newHashedPassword;
-            await _context.SaveChangesAsync();
+            
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                return Result<UpdateUserPasswordResponse>.Failure("Something went wrong, see error: " + ex.Message);
+            }
 
             return Result<UpdateUserPasswordResponse?>.Success(new UpdateUserPasswordResponse(newHashedPassword));
 

@@ -16,10 +16,10 @@ namespace WorkoutApplication.Modules.Users.Features.DeleteUser
 
                 if (result == null)
                 {
-                    return Results.BadRequest("User not found");
+                    return Results.BadRequest(result.Error);
                 }
 
-                return Results.Ok(result);
+                return Results.Ok(result.Value);
             }).RequireAuthorization();
         }
     }

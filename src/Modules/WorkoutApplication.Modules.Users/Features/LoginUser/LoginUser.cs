@@ -40,7 +40,14 @@ namespace WorkoutApplication.Modules.Users.Features.LoginUser
             user.RefreshToken = refreshToken;
             user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
 
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                return Result<LoginUserResponse>.Failure("Something went wrong, see error: " + ex.Message);
+            }
 
             return Result<LoginUserResponse>.Success(new LoginUserResponse(_tokenHelper.CreateToken(user), refreshToken));
         }
