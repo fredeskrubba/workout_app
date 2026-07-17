@@ -9,6 +9,7 @@ using WorkoutApplication.Modules.Users.Features.LoginUser;
 using WorkoutApplication.Modules.Users.Features.UpdateUserPassword;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using WorkoutApplication.Modules.Sessions.Features.CreateSession;
 using WorkoutApplication.Modules.Users.Features.UpdateRefreshToken;
 using WorkoutApplication.Modules.Users.Helpers;
 using WorkoutApplication.Shared.Data;
@@ -27,7 +28,7 @@ builder.Services.AddScoped<CreateUser>();
 builder.Services.AddScoped<DeleteUser>();
 builder.Services.AddScoped<UpdateUserPassword>();
 builder.Services.AddScoped<UpdateRefreshToken>();
-
+builder.Services.AddScoped<CreateSession>();
 
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
@@ -51,6 +52,7 @@ builder.Services.AddDbContext<WorkoutApplicationDBContext>(options =>
                 builder.Configuration.GetConnectionString("DefaultConnection")
             ));
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -65,11 +67,14 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapGetUserEndpoint();
-app.MapCreateUserEndpoint();
-app.MapLoginUserEndpoint();
-app.MapDeleteUserEndpoint();
-app.MapUpdateUserEndpointEndpoint();
-app.MapUpdateRefreshTokenEndpoint();
+var api = app.MapGroup("/api");
+
+api.MapGetUserEndpoint();
+api.MapCreateUserEndpoint();
+api.MapLoginUserEndpoint();
+api.MapDeleteUserEndpoint();
+api.MapUpdateUserEndpointEndpoint();
+api.MapUpdateRefreshTokenEndpoint();
+api.MapCreateSessionEndpoint();
 
 app.Run();

@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WorkoutApplication.Modules.Sessions.Entities;
-using WorkoutApplication.Modules.Users.Entities;
+using WorkoutApplication.Shared.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;

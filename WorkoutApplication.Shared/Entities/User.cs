@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace WorkoutApplication.Modules.Users.Entities;
+namespace WorkoutApplication.Shared.Entities;
 
 [Table("users")]
 public class User

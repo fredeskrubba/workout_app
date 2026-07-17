@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace WorkoutApplication.Modules.Sessions.Entities
+namespace WorkoutApplication.Shared.Entities
 {
     [Table("workout_sessions")]
     public class WorkoutSession

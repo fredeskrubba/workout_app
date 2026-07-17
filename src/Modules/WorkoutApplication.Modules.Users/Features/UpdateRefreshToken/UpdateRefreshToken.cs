@@ -1,4 +1,4 @@
-﻿using WorkoutApplication.Modules.Users.Entities;
+﻿using WorkoutApplication.Shared.Entities;
 using WorkoutApplication.Modules.Users.Helpers;
 using WorkoutApplication.Shared.Data;
 using WorkoutApplication.Shared.Results;
