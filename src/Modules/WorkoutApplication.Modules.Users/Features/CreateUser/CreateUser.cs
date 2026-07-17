@@ -29,7 +29,14 @@ namespace WorkoutApplication.Modules.Users.Features.CreateUser
 
             _context.Users.Add(user);
 
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                return Result<CreateUserResponse>.Failure("Something went wrong, see error: " + ex.Message);
+            }
 
             CreateUserResponse createdUser = new(user.FirstName,
             user.LastName,
