@@ -10,6 +10,10 @@ namespace WorkoutApplication.Shared.Data
     {
         public DbSet<WorkoutSession> WorkoutSessions { get; set; }
         public DbSet<User> Users { get; set; }
+        
+        public DbSet<Exercise> Exercises { get; set; }
+        
+        public DbSet<MuscleGroup> MuscleGroups { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -48,6 +52,25 @@ namespace WorkoutApplication.Shared.Data
             modelBuilder.Entity<User>()
                 .Property(x => x.HashedPassword)
                 .HasColumnName("hashed_password");
+            
+            modelBuilder.Entity<Exercise>()
+                .HasKey(x => x.Id);
+            
+            modelBuilder.Entity<MuscleGroup>()
+                .HasKey(x => x.Id);
+            
+            modelBuilder.Entity<ExerciseMuscleGroup>()
+                .HasKey(x => new { x.ExerciseId, x.MuscleGroupId });
+
+            modelBuilder.Entity<ExerciseMuscleGroup>()
+                .HasOne<Exercise>()
+                .WithMany()
+                .HasForeignKey(x => x.ExerciseId);
+
+            modelBuilder.Entity<ExerciseMuscleGroup>()
+                .HasOne<MuscleGroup>()
+                .WithMany()
+                .HasForeignKey(x => x.MuscleGroupId);
         }
     }
 }

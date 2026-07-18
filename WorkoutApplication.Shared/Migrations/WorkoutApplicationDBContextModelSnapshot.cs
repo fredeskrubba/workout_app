@@ -22,39 +22,67 @@ namespace WorkoutApplication.Shared.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("WorkoutApplication.Modules.Sessions.Entities.WorkoutSession", b =>
+            modelBuilder.Entity("WorkoutApplication.Shared.Entities.Exercise", b =>
                 {
-                    b.Property<int>("SessionId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasColumnName("session_id");
+                        .HasColumnName("id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("SessionId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("date");
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("description");
 
-                    b.Property<int>("DurationSeconds")
-                        .HasColumnType("integer")
-                        .HasColumnName("duration_seconds");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
 
-                    b.Property<int>("Rating")
-                        .HasColumnType("integer")
-                        .HasColumnName("rating");
+                    b.HasKey("Id");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer")
-                        .HasColumnName("user_id");
-
-                    b.HasKey("SessionId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("workout_sessions");
+                    b.ToTable("exercises");
                 });
 
-            modelBuilder.Entity("WorkoutApplication.Modules.Users.Entities.User", b =>
+            modelBuilder.Entity("WorkoutApplication.Shared.Entities.ExerciseMuscleGroup", b =>
+                {
+                    b.Property<int>("ExerciseId")
+                        .HasColumnType("integer")
+                        .HasColumnName("exercise_id");
+
+                    b.Property<int>("MuscleGroupId")
+                        .HasColumnType("integer")
+                        .HasColumnName("muscle_group_id");
+
+                    b.HasKey("ExerciseId", "MuscleGroupId");
+
+                    b.HasIndex("MuscleGroupId");
+
+                    b.ToTable("exercise_muscle_groups");
+                });
+
+            modelBuilder.Entity("WorkoutApplication.Shared.Entities.MuscleGroup", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("muscle_groups");
+                });
+
+            modelBuilder.Entity("WorkoutApplication.Shared.Entities.User", b =>
                 {
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
@@ -99,9 +127,56 @@ namespace WorkoutApplication.Shared.Migrations
                     b.ToTable("users", (string)null);
                 });
 
-            modelBuilder.Entity("WorkoutApplication.Modules.Sessions.Entities.WorkoutSession", b =>
+            modelBuilder.Entity("WorkoutApplication.Shared.Entities.WorkoutSession", b =>
                 {
-                    b.HasOne("WorkoutApplication.Modules.Users.Entities.User", null)
+                    b.Property<int>("SessionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("session_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("SessionId"));
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("date");
+
+                    b.Property<int>("DurationSeconds")
+                        .HasColumnType("integer")
+                        .HasColumnName("duration_seconds");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("integer")
+                        .HasColumnName("rating");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("SessionId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("workout_sessions");
+                });
+
+            modelBuilder.Entity("WorkoutApplication.Shared.Entities.ExerciseMuscleGroup", b =>
+                {
+                    b.HasOne("WorkoutApplication.Shared.Entities.Exercise", null)
+                        .WithMany()
+                        .HasForeignKey("ExerciseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WorkoutApplication.Shared.Entities.MuscleGroup", null)
+                        .WithMany()
+                        .HasForeignKey("MuscleGroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("WorkoutApplication.Shared.Entities.WorkoutSession", b =>
+                {
+                    b.HasOne("WorkoutApplication.Shared.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
