@@ -22,6 +22,11 @@ public class DeleteSession
         {
             return Result<DeleteSessionResponse>.Failure("Session not found");
         }
+
+        if (Int32.Parse(request.LoggedInUserId) != workoutSession.UserId)
+        {
+            return Result<DeleteSessionResponse>.Failure("No session with the supplied id found for the logged in user with id: " + request.LoggedInUserId);
+        }
         
         _context.Remove(workoutSession);
 

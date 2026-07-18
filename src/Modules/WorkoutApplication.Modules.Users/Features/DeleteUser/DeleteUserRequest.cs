@@ -4,6 +4,6 @@ using System.Text;
 
 namespace WorkoutApplication.Modules.Users.Features.DeleteUser
 {
-    public record DeleteUserRequest(int UserId);
+    public record DeleteUserRequest(int UserId, string LoggedInUserId);
 
 }

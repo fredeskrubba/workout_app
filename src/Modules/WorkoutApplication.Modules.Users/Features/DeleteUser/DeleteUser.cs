@@ -17,6 +17,16 @@ namespace WorkoutApplication.Modules.Users.Features.DeleteUser
         {
            
             var user = await _context.Users.FirstOrDefaultAsync( x => x.UserId == request.UserId);
+            
+            if (user is null)
+            {
+                return Result<DeleteUserResponse>.Failure("User not found");
+            }
+
+            if (Int32.Parse(request.LoggedInUserId) != user.UserId)
+            {
+                return Result<DeleteUserResponse>.Failure("The logged in user does not have permission to delete this user");
+            }
 
             _context.Users.Remove(user);
 

@@ -26,6 +26,7 @@ namespace WorkoutApplication.Modules.Users.Features.CreateUser
                 .HashPassword(user, request.Password);
 
             user.HashedPassword = hashedPassword;
+            user.RefreshToken = "";
 
             _context.Users.Add(user);
 

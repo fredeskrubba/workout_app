@@ -22,7 +22,8 @@ namespace WorkoutApplication.Modules.Users.Helpers
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, user.FirstName + " " + user.LastName)
+                new Claim(ClaimTypes.Name, user.FirstName + " " + user.LastName),
+                new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString())
             };
 
             var key = new SymmetricSecurityKey(
