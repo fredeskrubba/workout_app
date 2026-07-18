@@ -10,6 +10,7 @@ using WorkoutApplication.Modules.Users.Features.UpdateUserPassword;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using WorkoutApplication.Modules.Sessions.Features.CreateSession;
+using WorkoutApplication.Modules.Sessions.Features.DeleteSession;
 using WorkoutApplication.Modules.Users.Features.UpdateRefreshToken;
 using WorkoutApplication.Modules.Users.Helpers;
 using WorkoutApplication.Shared.Data;
@@ -22,13 +23,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
-builder.Services.AddScoped<LoginUser>();
-builder.Services.AddScoped<GetUser>();
-builder.Services.AddScoped<CreateUser>();
-builder.Services.AddScoped<DeleteUser>();
-builder.Services.AddScoped<UpdateUserPassword>();
-builder.Services.AddScoped<UpdateRefreshToken>();
-builder.Services.AddScoped<CreateSession>();
+builder.Services.AddUsersModule();
+builder.Services.AddWorkoutSessionModule();
 
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
@@ -76,5 +72,6 @@ api.MapDeleteUserEndpoint();
 api.MapUpdateUserEndpointEndpoint();
 api.MapUpdateRefreshTokenEndpoint();
 api.MapCreateSessionEndpoint();
+api.MapDeleteSessionEndpoint();
 
 app.Run();
