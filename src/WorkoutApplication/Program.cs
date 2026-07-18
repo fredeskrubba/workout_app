@@ -11,6 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using WorkoutApplication.Modules.Sessions.Features.CreateSession;
 using WorkoutApplication.Modules.Sessions.Features.DeleteSession;
+using WorkoutApplication.Modules.Sessions.Features.GetAllUserSessions;
 using WorkoutApplication.Modules.Users.Features.UpdateRefreshToken;
 using WorkoutApplication.Modules.Users.Helpers;
 using WorkoutApplication.Shared.Data;
@@ -73,5 +74,5 @@ api.MapUpdateUserEndpointEndpoint();
 api.MapUpdateRefreshTokenEndpoint();
 api.MapCreateSessionEndpoint();
 api.MapDeleteSessionEndpoint();
-
+api.MapGetAllUserSessionsEndpoint();
 app.Run();

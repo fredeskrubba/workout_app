@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore; 
 using WorkoutApplication.Shared.Results;
 using WorkoutApplication.Shared.Data;
-using WorkoutApplication.Shared.Entities;
+
 
 namespace WorkoutApplication.Modules.Sessions.Features.DeleteSession;
 

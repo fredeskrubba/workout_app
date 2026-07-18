@@ -1,0 +1,3 @@
+namespace WorkoutApplication.Modules.Sessions.Features.GetAllUserSessions;
+
+public record GetAllUserSessionsRequest(string LoggedInUserId);
