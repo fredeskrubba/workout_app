@@ -7,9 +7,9 @@ namespace WorkoutApplication.Modules.Users.Features.DeleteUser
 {
     public static class DeleteUserEndpoint
     {
-        public static void MapDeleteUserEndpoint(this IEndpointRouteBuilder app, ClaimsPrincipal user)
+        public static void MapDeleteUserEndpoint(this IEndpointRouteBuilder app)
         {
-            app.MapDelete("/users/{id:int}", async (DeleteUser handler, int id) =>
+            app.MapDelete("/users/{id:int}", async (DeleteUser handler, int id, ClaimsPrincipal user) =>
             {
                 var loggedinUserId = user.FindFirstValue(ClaimTypes.NameIdentifier);
                 var query = new DeleteUserRequest(id, loggedinUserId);
