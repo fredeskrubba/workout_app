@@ -9,4 +9,7 @@ public class ExerciseMuscleGroup
     public int ExerciseId;
     [Column("muscle_group_id")]
     public int MuscleGroupId;
+    
+    [Column("is_primary")]
+    public bool IsPrimary;
 }

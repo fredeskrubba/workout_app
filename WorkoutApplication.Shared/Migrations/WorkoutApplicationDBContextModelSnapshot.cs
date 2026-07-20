@@ -36,6 +36,11 @@ namespace WorkoutApplication.Shared.Migrations
                         .HasColumnType("text")
                         .HasColumnName("description");
 
+                    b.Property<string>("ExerciseType")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("exercise_type");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text")
@@ -55,6 +60,10 @@ namespace WorkoutApplication.Shared.Migrations
                     b.Property<int>("MuscleGroupId")
                         .HasColumnType("integer")
                         .HasColumnName("muscle_group_id");
+
+                    b.Property<bool>("IsPrimary")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_primary");
 
                     b.HasKey("ExerciseId", "MuscleGroupId");
 

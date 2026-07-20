@@ -56,6 +56,10 @@ namespace WorkoutApplication.Shared.Data
             modelBuilder.Entity<Exercise>()
                 .HasKey(x => x.Id);
             
+            modelBuilder.Entity<Exercise>()
+                .Property(x => x.ExerciseType)
+                .HasConversion<string>();
+            
             modelBuilder.Entity<MuscleGroup>()
                 .HasKey(x => x.Id);
             
@@ -71,6 +75,10 @@ namespace WorkoutApplication.Shared.Data
                 .HasOne<MuscleGroup>()
                 .WithMany()
                 .HasForeignKey(x => x.MuscleGroupId);
+            
+            modelBuilder.Entity<ExerciseMuscleGroup>()
+                .Property(x => x.IsPrimary)
+                .HasColumnName("is_primary");
         }
     }
 }
