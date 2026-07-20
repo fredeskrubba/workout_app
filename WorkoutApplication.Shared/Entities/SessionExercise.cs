@@ -17,5 +17,8 @@ public class SessionExercise
     
     [Column("Weight")]
     public double Weight { get; set; }
+    
+    [Column("Sets")]
+    public int Sets { get; set; }
 
 }

@@ -10,9 +10,9 @@ public static class GetAllUserSessionsEndpoint
     {
         app.MapGet("/session", async (GetAllUserSessions handler, ClaimsPrincipal user) =>
         {
-            var loggedinUserId = user.FindFirstValue(ClaimTypes.NameIdentifier);
+            var loggedInUserId = user.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var query = new GetAllUserSessionsRequest(loggedinUserId);
+            var query = new GetAllUserSessionsRequest(loggedInUserId);
 
             var result = await handler.Handle(query);
 

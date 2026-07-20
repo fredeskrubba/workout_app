@@ -91,6 +91,44 @@ namespace WorkoutApplication.Shared.Migrations
                     b.ToTable("muscle_groups");
                 });
 
+            modelBuilder.Entity("WorkoutApplication.Shared.Entities.SessionExercise", b =>
+                {
+                    b.Property<int>("SessionExerciseId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("session_exercise_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("SessionExerciseId"));
+
+                    b.Property<int>("ExerciseId")
+                        .HasColumnType("integer")
+                        .HasColumnName("exercise_id");
+
+                    b.Property<int>("Reps")
+                        .HasColumnType("integer")
+                        .HasColumnName("reps");
+
+                    b.Property<int>("SessionId")
+                        .HasColumnType("integer")
+                        .HasColumnName("session_id");
+
+                    b.Property<int>("Sets")
+                        .HasColumnType("integer")
+                        .HasColumnName("Sets");
+
+                    b.Property<double>("Weight")
+                        .HasColumnType("double precision")
+                        .HasColumnName("Weight");
+
+                    b.HasKey("SessionExerciseId");
+
+                    b.HasIndex("ExerciseId");
+
+                    b.HasIndex("SessionId");
+
+                    b.ToTable("session_exercises");
+                });
+
             modelBuilder.Entity("WorkoutApplication.Shared.Entities.User", b =>
                 {
                     b.Property<int>("UserId")
@@ -179,6 +217,21 @@ namespace WorkoutApplication.Shared.Migrations
                     b.HasOne("WorkoutApplication.Shared.Entities.MuscleGroup", null)
                         .WithMany()
                         .HasForeignKey("MuscleGroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("WorkoutApplication.Shared.Entities.SessionExercise", b =>
+                {
+                    b.HasOne("WorkoutApplication.Shared.Entities.Exercise", null)
+                        .WithMany()
+                        .HasForeignKey("ExerciseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WorkoutApplication.Shared.Entities.WorkoutSession", null)
+                        .WithMany()
+                        .HasForeignKey("SessionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

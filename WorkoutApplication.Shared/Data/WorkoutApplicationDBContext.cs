@@ -14,6 +14,8 @@ namespace WorkoutApplication.Shared.Data
         public DbSet<Exercise> Exercises { get; set; }
         
         public DbSet<MuscleGroup> MuscleGroups { get; set; }
+        
+        public DbSet<SessionExercise>  SessionExercises { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -79,6 +81,16 @@ namespace WorkoutApplication.Shared.Data
             modelBuilder.Entity<ExerciseMuscleGroup>()
                 .Property(x => x.IsPrimary)
                 .HasColumnName("is_primary");
+            
+            modelBuilder.Entity<SessionExercise>()
+                .HasOne<WorkoutSession>()
+                .WithMany()
+                .HasForeignKey(x => x.SessionId);
+
+            modelBuilder.Entity<SessionExercise>()
+                .HasOne<Exercise>()
+                .WithMany()
+                .HasForeignKey(x => x.ExerciseId);
         }
     }
 }
