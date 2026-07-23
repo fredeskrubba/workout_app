@@ -20,7 +20,7 @@ public class User
 
     public string Role { get; set; } = "user";
 
-    public string RefreshToken { get; set; }
+    public string RefreshToken { get; set; } = string.Empty;
 
     public DateTime? RefreshTokenExpiryTime { get; set; }
     public User(string firstName, string lastName, string email)
