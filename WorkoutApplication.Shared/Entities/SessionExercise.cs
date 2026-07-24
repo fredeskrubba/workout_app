@@ -21,4 +21,6 @@ public class SessionExercise
     [Column("Sets")]
     public int Sets { get; set; }
 
+    public Exercise Exercise { get; set; } = null!;
+
 }

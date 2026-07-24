@@ -15,7 +15,7 @@ namespace WorkoutApplication.Shared.Migrations
                 table: "session_exercises",
                 type: "integer",
                 nullable: false,
-                defaultValue: 8);
+                defaultValue: 3);
         }
 
         /// <inheritdoc />

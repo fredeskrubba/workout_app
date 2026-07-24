@@ -91,6 +91,11 @@ namespace WorkoutApplication.Shared.Data
                 .HasOne<Exercise>()
                 .WithMany()
                 .HasForeignKey(x => x.ExerciseId);
+
+            modelBuilder.Entity<SessionExercise>()
+            .HasOne(se => se.Exercise)
+            .WithMany()
+            .HasForeignKey(se => se.ExerciseId);
         }
     }
 }

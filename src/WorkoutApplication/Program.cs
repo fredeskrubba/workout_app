@@ -16,6 +16,7 @@ using WorkoutApplication.Modules.Sessions.Features.GetAllUserSessions;
 using WorkoutApplication.Modules.Users.Features.UpdateRefreshToken;
 using WorkoutApplication.Modules.Users.Helpers;
 using WorkoutApplication.Shared.Data;
+using WorkoutApplication.Modules.Sessions.Features.GetAllSessionExercises;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -77,4 +78,5 @@ api.MapCreateSessionEndpoint();
 api.MapDeleteSessionEndpoint();
 api.MapGetAllUserSessionsEndpoint();
 api.MapAddExerciseToSessionEndpoint();
+api.MapGetAllSessionExercisesEndpoint();
 app.Run();
