@@ -19,6 +19,8 @@ using WorkoutApplication.Shared.Data;
 using WorkoutApplication.Modules.Sessions.Features.GetAllSessionExercises;
 using WorkoutApplication.Modules.Users.Features.PasswordReset.ResetUserPassword;
 using WorkoutApplication.Modules.Users.Features.PasswordReset.ForgotUserPassword;
+using WorkoutApplication.Modules.Exercises;
+using WorkoutApplication.Modules.Exercises.Features.GetAllExercises;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,6 +32,7 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddUsersModule();
 builder.Services.AddWorkoutSessionModule();
+builder.Services.AddExercisesModule();
 
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
@@ -83,4 +86,5 @@ api.MapAddExerciseToSessionEndpoint();
 api.MapGetAllSessionExercisesEndpoint();
 api.MapForgotUserPasswordEndpoint();
 api.MapResetUserPasswordEndpoint();
+api.MapGetAllExercisesEndpoint();
 app.Run();

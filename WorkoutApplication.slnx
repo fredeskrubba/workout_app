@@ -2,5 +2,6 @@
   <Project Path="src/Modules/WorkoutApplication.Modules.Sessions/WorkoutApplication.Modules.Sessions.csproj" />
   <Project Path="src/Modules/WorkoutApplication.Modules.Users/WorkoutApplication.Modules.Users.csproj" Id="b75c6e68-a108-45ad-9ad2-f5651e98c0ca" />
   <Project Path="src/WorkoutApplication/WorkoutApplication.csproj" />
+  <Project Path="WorkoutApplication.Modules.Exercises/WorkoutApplication.Modules.Exercises.csproj" Id="bd86261f-07c2-47d6-9ac1-a11878ee50ba" />
   <Project Path="WorkoutApplication.Shared/WorkoutApplication.Shared.csproj" Id="cbfb4360-a541-4447-b7a1-fde0b5f9882e" />
 </Solution>

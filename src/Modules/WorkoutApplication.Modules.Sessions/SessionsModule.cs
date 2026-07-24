@@ -6,7 +6,7 @@ using WorkoutApplication.Modules.Sessions.Features.AddExerciseToSession;
 using WorkoutApplication.Modules.Sessions.Features.GetAllSessionExercises;
 namespace WorkoutApplication.Modules.Sessions
 {
-    public static class SessionModule
+    public static class SessionsModule
     {
         public static IServiceCollection AddWorkoutSessionModule(this IServiceCollection services)
         {
