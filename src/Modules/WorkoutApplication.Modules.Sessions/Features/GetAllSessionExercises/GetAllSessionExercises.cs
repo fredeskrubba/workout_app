@@ -19,17 +19,17 @@ namespace WorkoutApplication.Modules.Sessions.Features.GetAllSessionExercises
         {
             int userId = int.Parse(request.LoggedInUserId);
             var exercises = await _context.SessionExercises.Include(se => se.Exercise).Where(x => x.SessionId == request.SessionId).Select(se => new SessionExerciseDto(
-        se.SessionExerciseId,
-        se.SessionId,
-        se.Sets,
-        se.Reps,
-        se.Weight,
-        new ExerciseDto(
-            se.Exercise.Id,
-            se.Exercise.Name,
-            se.Exercise.Description,
-            se.Exercise.ExerciseType
-        ))).ToListAsync();
+                se.SessionExerciseId,
+                se.SessionId,
+                se.Sets,
+                se.Reps,
+                se.Weight,
+                new ExerciseDto(
+                    se.Exercise.Id,
+                    se.Exercise.Name,
+                    se.Exercise.Description,
+                    se.Exercise.ExerciseType
+                ))).ToListAsync();
 
             if (exercises is null || exercises.Count == 0)
             {

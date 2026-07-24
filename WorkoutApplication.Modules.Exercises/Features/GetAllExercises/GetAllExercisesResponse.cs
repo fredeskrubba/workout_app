@@ -6,14 +6,14 @@ using WorkoutApplication.Shared.Entities;
 
 namespace WorkoutApplication.Modules.Exercises.Features.GetAllExercises
 {
-    public record GetAllExercisesResponse(IEnumerable<Exercise> Exercises);
+    public record GetAllExercisesResponse(IEnumerable<ExerciseDto> Exercises);
 
     public record ExerciseDto(
        int Id,
        string Name,
        string Description,
        ExerciseType ExerciseType,
-       ExerciseDto Exercise
+       IEnumerable<MuscleGroupDto> MuscleGroups
    );
 
     public record MuscleGroupDto(

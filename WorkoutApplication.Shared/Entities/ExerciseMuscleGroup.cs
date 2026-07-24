@@ -12,4 +12,7 @@ public class ExerciseMuscleGroup
     
     [Column("is_primary")]
     public bool IsPrimary;
+
+    public Exercise Exercise { get; set; } = null!;
+    public MuscleGroup MuscleGroup { get; set; } = null!;
 }

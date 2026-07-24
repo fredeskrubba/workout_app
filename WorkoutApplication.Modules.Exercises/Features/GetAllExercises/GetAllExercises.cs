@@ -16,7 +16,15 @@ namespace WorkoutApplication.Modules.Exercises.Features.GetAllExercises
         public async Task<Result<GetAllExercisesResponse>> Handle(GetAllExercisesRequest request)
         {
             
-            var exercises = await _context.Exercises.ToListAsync();
+            var exercises = await _context.Exercises.Select(e => new ExerciseDto(
+                e.Id,
+                e.Name,
+                e.Description,
+                e.ExerciseType,
+                e.ExerciseMuscleGroups.Select(emg => new MuscleGroupDto(
+                    emg.MuscleGroup.Id,
+                    emg.MuscleGroup.Name
+            )))).ToListAsync();
 
             if (exercises is null || exercises.Count == 0)
             {

@@ -14,4 +14,6 @@ public class Exercise
     public string Description { get; set; }
     [Column("exercise_type")]
     public ExerciseType ExerciseType { get; set; }
+
+    public ICollection<ExerciseMuscleGroup> ExerciseMuscleGroups { get; set; } = [];
 }

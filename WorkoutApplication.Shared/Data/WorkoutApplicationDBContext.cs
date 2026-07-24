@@ -96,6 +96,19 @@ namespace WorkoutApplication.Shared.Data
             .HasOne(se => se.Exercise)
             .WithMany()
             .HasForeignKey(se => se.ExerciseId);
+
+            modelBuilder.Entity<ExerciseMuscleGroup>()
+    .HasKey(x => new { x.ExerciseId, x.MuscleGroupId });
+
+            modelBuilder.Entity<ExerciseMuscleGroup>()
+                .HasOne(x => x.Exercise)
+                .WithMany(e => e.ExerciseMuscleGroups)
+                .HasForeignKey(x => x.ExerciseId);
+
+            modelBuilder.Entity<ExerciseMuscleGroup>()
+                .HasOne(x => x.MuscleGroup)
+                .WithMany()
+                .HasForeignKey(x => x.MuscleGroupId);
         }
     }
 }
