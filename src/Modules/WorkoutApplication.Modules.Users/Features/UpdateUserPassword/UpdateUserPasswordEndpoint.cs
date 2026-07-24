@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Routing;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
+using System.Security.Claims;
+using WorkoutApplication.Modules.Users.Features.DeleteUser;
 
 namespace WorkoutApplication.Modules.Users.Features.UpdateUserPassword
 {
@@ -8,11 +10,13 @@ namespace WorkoutApplication.Modules.Users.Features.UpdateUserPassword
     {
         public static void MapUpdateUserEndpointEndpoint(this IEndpointRouteBuilder app)
         {
-            app.MapPut("/password", async (UpdateUserPassword handler, UpdateUserPasswordRequest request) =>
+            app.MapPut("/password", async (UpdateUserPassword handler, UpdateUserPasswordRequest request, ClaimsPrincipal user) =>
             {
 
-                var result = await handler.Handle(request);
+                var loggedInUserId = user.FindFirstValue(ClaimTypes.NameIdentifier);
 
+                var result = await handler.Handle(request, loggedInUserId);
+               
                 if (result.IsSuccess)
                 {
 
@@ -24,7 +28,7 @@ namespace WorkoutApplication.Modules.Users.Features.UpdateUserPassword
                     return Results.BadRequest(result.Error);
                 }
 
-            });
+            }).RequireAuthorization();
         }
     }
 }

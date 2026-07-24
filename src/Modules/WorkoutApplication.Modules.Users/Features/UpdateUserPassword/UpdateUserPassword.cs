@@ -18,13 +18,19 @@ namespace WorkoutApplication.Modules.Users.Features.UpdateUserPassword
            
         }
 
-        public async Task<Result<UpdateUserPasswordResponse?>> Handle(UpdateUserPasswordRequest request)
+        public async Task<Result<UpdateUserPasswordResponse?>> Handle(UpdateUserPasswordRequest request, string loggedInUserId)
         {
             var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == request.Email);
+            int userId = int.Parse(loggedInUserId);
 
             if (user is null)
             {
                 return Result<UpdateUserPasswordResponse?>.Failure("User not found");
+            }
+
+            if(user.UserId != userId)
+            {
+                return Result<UpdateUserPasswordResponse?>.Failure("Email doesnt belong to the logged in user");
             }
 
             var newHashedPassword = new PasswordHasher<User>().HashPassword(user, request.NewPassword);

@@ -5,6 +5,8 @@ using WorkoutApplication.Modules.Users.Features.GetUser;
 using WorkoutApplication.Modules.Users.Features.LoginUser;
 using WorkoutApplication.Modules.Users.Features.UpdateUserPassword;
 using WorkoutApplication.Modules.Users.Features.UpdateRefreshToken;
+using WorkoutApplication.Modules.Users.Features.PasswordReset.ForgotUserPassword;
+using WorkoutApplication.Modules.Users.Features.PasswordReset.ResetUserPassword;
 
 namespace WorkoutApplication.Modules.Users
 {
@@ -18,6 +20,8 @@ namespace WorkoutApplication.Modules.Users
             services.AddScoped<DeleteUser>();
             services.AddScoped<UpdateUserPassword>();
             services.AddScoped<UpdateRefreshToken>();
+            services.AddScoped<ForgotUserPassword>();
+            services.AddScoped<ResetUserPassword>();
 
             return services;
         }
