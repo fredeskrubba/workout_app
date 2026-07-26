@@ -1,12 +1,13 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using WorkoutApplication.Modules.Users.Features.CreateUser;
 using WorkoutApplication.Modules.Users.Features.DeleteUser;
 using WorkoutApplication.Modules.Users.Features.GetUser;
 using WorkoutApplication.Modules.Users.Features.LoginUser;
-using WorkoutApplication.Modules.Users.Features.UpdateUserPassword;
-using WorkoutApplication.Modules.Users.Features.UpdateRefreshToken;
 using WorkoutApplication.Modules.Users.Features.PasswordReset.ForgotUserPassword;
 using WorkoutApplication.Modules.Users.Features.PasswordReset.ResetUserPassword;
+using WorkoutApplication.Modules.Users.Features.UpdateRefreshToken;
+using WorkoutApplication.Modules.Users.Features.UpdateUserPassword;
 
 namespace WorkoutApplication.Modules.Users
 {

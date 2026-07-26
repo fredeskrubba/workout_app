@@ -23,6 +23,8 @@ public class User
     public string RefreshToken { get; set; } = string.Empty;
 
     public DateTime? RefreshTokenExpiryTime { get; set; }
+
+    public IEnumerable<PasswordResetToken> PasswordResetTokens { get; set; }
     public User(string firstName, string lastName, string email)
     {
         FirstName = firstName;

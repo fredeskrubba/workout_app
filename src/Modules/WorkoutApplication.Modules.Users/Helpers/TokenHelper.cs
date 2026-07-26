@@ -52,5 +52,16 @@ namespace WorkoutApplication.Modules.Users.Helpers
             return Convert.ToBase64String(randomNumber);
         }
 
+        public string GenerateResetToken()
+        {
+            var randomNumber = RandomNumberGenerator.GetBytes(32);
+            var base64 = Convert.ToBase64String(randomNumber);
+
+            // Make it URL-safe
+            return base64.Replace('+', '-').Replace('/', '_').TrimEnd('=');
+
+
+        }
+
     }
 }

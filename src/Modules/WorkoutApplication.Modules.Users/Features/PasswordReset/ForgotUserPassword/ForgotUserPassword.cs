@@ -1,4 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography;
+using System.Text;
+using WorkoutApplication.Modules.Users.Features.CreateUser;
+using WorkoutApplication.Modules.Users.Helpers;
 using WorkoutApplication.Shared.Data;
 using WorkoutApplication.Shared.Entities;
 using WorkoutApplication.Shared.Results;
@@ -8,10 +12,12 @@ namespace WorkoutApplication.Modules.Users.Features.PasswordReset.ForgotUserPass
     public class ForgotUserPassword
     {
         private readonly WorkoutApplicationDBContext _context;
+        private readonly TokenHelper _tokenHelper;
 
-        public ForgotUserPassword(WorkoutApplicationDBContext context)
+        public ForgotUserPassword(WorkoutApplicationDBContext context, TokenHelper tokenHelper)
         {
             _context = context;
+            _tokenHelper = tokenHelper;
         }
 
         public async Task<Result<ForgotUserPasswordResponse?>> Handle(ForgotUserPasswordRequest request)
@@ -23,9 +29,52 @@ namespace WorkoutApplication.Modules.Users.Features.PasswordReset.ForgotUserPass
                 return Result<ForgotUserPasswordResponse?>.Failure("User not found");
             }
 
-            // In a real implementation you'd create a password-reset token and send an email.
-            // For now return success with a simple message.
-            return Result<ForgotUserPasswordResponse?>.Success(new ForgotUserPasswordResponse("Password reset requested"));
+            
+
+            var previousResetToken = await _context.ResetTokens.FirstOrDefaultAsync(t => t.UserId == user.UserId);
+
+            var resetToken = _tokenHelper.GenerateResetToken();
+
+            var hashBytes = SHA256.HashData(Encoding.UTF8.GetBytes(resetToken));
+            var tokenHash = Convert.ToHexString(hashBytes);
+
+            if(previousResetToken is null)
+            {
+
+                PasswordResetToken tokenToSave = new()
+                {
+                    UserId = user.UserId,
+                    TokenHash = tokenHash,
+                    ExpiresAt = DateTime.UtcNow.AddMinutes(30),
+                    CreatedAt = DateTime.UtcNow
+                };
+
+                _context.ResetTokens.Add(tokenToSave);
+
+
+
+            } else
+            {
+                previousResetToken.TokenHash = tokenHash;
+                previousResetToken.CreatedAt = DateTime.UtcNow;
+                previousResetToken.ExpiresAt = DateTime.UtcNow.AddMinutes(30);
+                previousResetToken.IsUsed = false;
+
+            }
+
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                return Result<ForgotUserPasswordResponse>.Failure("Something went wrong, see error: " + ex.Message);
+            }
+
+            // send email to user
+
+            return Result<ForgotUserPasswordResponse?>.Success(new ForgotUserPasswordResponse("Reset link sent to email"));
         }
     }
 }

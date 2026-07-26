@@ -22,7 +22,6 @@ using WorkoutApplication.Modules.Users.Features.PasswordReset.ForgotUserPassword
 using WorkoutApplication.Modules.Exercises;
 using WorkoutApplication.Modules.Exercises.Features.GetAllExercises;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.

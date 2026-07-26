@@ -17,6 +17,8 @@ namespace WorkoutApplication.Shared.Data
         
         public DbSet<SessionExercise>  SessionExercises { get; set; }
 
+        public DbSet<PasswordResetToken> ResetTokens { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -109,6 +111,12 @@ namespace WorkoutApplication.Shared.Data
                 .HasOne(x => x.MuscleGroup)
                 .WithMany()
                 .HasForeignKey(x => x.MuscleGroupId);
+
+            modelBuilder.Entity<PasswordResetToken>()
+            .HasOne(t => t.User)
+            .WithMany(u => u.PasswordResetTokens)
+            .HasForeignKey(t => t.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
