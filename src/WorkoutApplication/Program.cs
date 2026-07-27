@@ -21,6 +21,7 @@ using WorkoutApplication.Modules.Users.Features.PasswordReset.ResetUserPassword;
 using WorkoutApplication.Modules.Users.Features.PasswordReset.ForgotUserPassword;
 using WorkoutApplication.Modules.Exercises;
 using WorkoutApplication.Modules.Exercises.Features.GetAllExercises;
+using WorkoutApplication.Shared.Services.Email;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +33,7 @@ builder.Services.AddOpenApi();
 builder.Services.AddUsersModule();
 builder.Services.AddWorkoutSessionModule();
 builder.Services.AddExercisesModule();
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>

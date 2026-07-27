@@ -6,6 +6,7 @@ using WorkoutApplication.Modules.Users.Helpers;
 using WorkoutApplication.Shared.Data;
 using WorkoutApplication.Shared.Entities;
 using WorkoutApplication.Shared.Results;
+using WorkoutApplication.Shared.Services.Email;
 
 namespace WorkoutApplication.Modules.Users.Features.PasswordReset.ForgotUserPassword
 {
@@ -13,11 +14,13 @@ namespace WorkoutApplication.Modules.Users.Features.PasswordReset.ForgotUserPass
     {
         private readonly WorkoutApplicationDBContext _context;
         private readonly TokenHelper _tokenHelper;
+        private readonly IEmailService _emailService;
 
-        public ForgotUserPassword(WorkoutApplicationDBContext context, TokenHelper tokenHelper)
+        public ForgotUserPassword(WorkoutApplicationDBContext context, TokenHelper tokenHelper, IEmailService emailService)
         {
             _context = context;
             _tokenHelper = tokenHelper;
+            _emailService = emailService;
         }
 
         public async Task<Result<ForgotUserPasswordResponse?>> Handle(ForgotUserPasswordRequest request)
@@ -72,7 +75,55 @@ namespace WorkoutApplication.Modules.Users.Features.PasswordReset.ForgotUserPass
                 return Result<ForgotUserPasswordResponse>.Failure("Something went wrong, see error: " + ex.Message);
             }
 
-            // send email to user
+            string resetLink = $"{resetToken}";
+
+            var emailBody = $@"
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset='UTF-8'>
+                    <title>Password Reset</title>
+                </head>
+                <body>
+                    <h2>Reset your Workout App password</h2>
+
+                    <p>
+                        We received a request to reset the password for your Workout App account.
+                    </p>
+
+                    <p>
+                        If you made this request, use the following token:
+                    </p>
+
+                    <p>
+                        {resetLink}
+                        </a>
+                    </p>
+
+                    <p>
+                        This link will expire in 30 minutes.
+                    </p>
+
+                    <p>
+                        If you did not request a password reset, you can safely ignore this email.
+                        Your password will remain unchanged.
+                    </p>
+
+                    <br>
+
+                    <p>
+                        Best regards,<br>
+                        Frederik Skrubbeltrang
+                    </p>
+                </body>
+                </html>
+                ";
+
+            await _emailService.SendEmailAsync(
+                user.Email,
+                "Reset your Workout App password",
+                emailBody
+            );
 
             return Result<ForgotUserPasswordResponse?>.Success(new ForgotUserPasswordResponse("Reset link sent to email"));
         }

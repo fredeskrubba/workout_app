@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Mail;
@@ -8,10 +9,17 @@ namespace WorkoutApplication.Shared.Services.Email
 {
     public class EmailService : IEmailService
     {
+        private readonly IConfiguration _configuration;
+
+        public EmailService(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
         public Task SendEmailAsync(string email, string subject, string message)
         {
-            var mail = "frederikskrubbeltrangbs@gmail.com";
-            var password = "";
+            var mail = _configuration["EmailSettings:Email"];
+            var password = _configuration["EmailSettings:Password"];
 
             using var client = new SmtpClient("smtp.gmail.com", 587)
             {
