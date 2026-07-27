@@ -22,6 +22,7 @@ using WorkoutApplication.Modules.Users.Features.PasswordReset.ForgotUserPassword
 using WorkoutApplication.Modules.Exercises;
 using WorkoutApplication.Modules.Exercises.Features.GetAllExercises;
 using WorkoutApplication.Shared.Services.Email;
+using WorkoutApplication.Modules.Routines;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +34,7 @@ builder.Services.AddOpenApi();
 builder.Services.AddUsersModule();
 builder.Services.AddWorkoutSessionModule();
 builder.Services.AddExercisesModule();
+builder.Services.AddRoutinesModule();
 builder.Services.AddScoped<IEmailService, EmailService>();
 
 

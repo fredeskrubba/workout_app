@@ -4,6 +4,7 @@ using WorkoutApplication.Modules.Sessions.Features.DeleteSession;
 using WorkoutApplication.Modules.Sessions.Features.GetAllUserSessions;
 using WorkoutApplication.Modules.Sessions.Features.AddExerciseToSession;
 using WorkoutApplication.Modules.Sessions.Features.GetAllSessionExercises;
+
 namespace WorkoutApplication.Modules.Sessions
 {
     public static class SessionsModule
