@@ -1,0 +1,5 @@
+﻿add new migration
+dotnet ef migrations add migrationname --project . --startup-project C:\Users\Frede\Desktop\Work\Projects\workoutApplication\src\WorkoutApplication\WorkoutApplication.csproj
+
+apply migration
+dotnet ef database update --project . --startup-project C:\Users\Frede\Desktop\Work\Projects\workoutApplication\src\WorkoutApplication\WorkoutApplication.csproj

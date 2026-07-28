@@ -19,11 +19,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\WorkoutApplication.Modules.Exercises\WorkoutApplication.Modules.Exercises.csproj" />
-    <ProjectReference Include="..\..\WorkoutApplication.Modules.Routines\WorkoutApplication.Modules.Routines.csproj" />
-    <ProjectReference Include="..\..\WorkoutApplication.Shared\WorkoutApplication.Shared.csproj" />
+    <ProjectReference Include="..\Modules\WorkoutApplication.Modules.Routines\WorkoutApplication.Modules.Routines.csproj" />
+    <ProjectReference Include="..\Modules\WorkoutApplication.Modules.Exercises\WorkoutApplication.Modules.Exercises.csproj" />
+    <ProjectReference Include="..\Modules\WorkoutApplication.Modules.Routines\WorkoutApplication.Modules.Routines.csproj" />
     <ProjectReference Include="..\Modules\WorkoutApplication.Modules.Sessions\WorkoutApplication.Modules.Sessions.csproj" />
     <ProjectReference Include="..\Modules\WorkoutApplication.Modules.Users\WorkoutApplication.Modules.Users.csproj" />
+    <ProjectReference Include="..\Modules\WorkoutApplication.Shared\WorkoutApplication.Shared.csproj" />
   </ItemGroup>
 
 
