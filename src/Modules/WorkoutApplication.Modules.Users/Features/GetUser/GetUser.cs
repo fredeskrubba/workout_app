@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using WorkoutApplication.Modules.Users.Features.DeleteUser;
 using WorkoutApplication.Shared.Data;
+using WorkoutApplication.Shared.Results;
 
 namespace WorkoutApplication.Modules.Users.Features.GetUser
 {
@@ -12,21 +14,24 @@ namespace WorkoutApplication.Modules.Users.Features.GetUser
             _context = context;
         }
 
-        public async Task<GetUserResponse?> Handle(GetUserRequest request)
+        public async Task<Result<GetUserResponse>> Handle(GetUserRequest request)
         {
             var user = await _context.Users.FirstOrDefaultAsync(x => x.UserId == request.UserId);
 
             if (user == null)
             {
-                return null;
+                return Result<GetUserResponse>.Failure("User not found");
             }
 
-            return new GetUserResponse(
+
+            return Result<GetUserResponse>.Success(new GetUserResponse(
                 user.UserId,
                 user.FirstName,
                 user.LastName,
                 user.Email
-            );
+            ));
+
+            
         }
     }
 }
