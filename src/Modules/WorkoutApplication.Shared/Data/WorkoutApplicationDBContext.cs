@@ -9,6 +9,8 @@ namespace WorkoutApplication.Shared.Data
     public class WorkoutApplicationDBContext(DbContextOptions<WorkoutApplicationDBContext> options) : DbContext(options)
     {
         public DbSet<WorkoutSession> WorkoutSessions { get; set; }
+
+        public DbSet<Routine> Routines { get; set; }
         public DbSet<User> Users { get; set; }
         
         public DbSet<Exercise> Exercises { get; set; }
@@ -16,6 +18,8 @@ namespace WorkoutApplication.Shared.Data
         public DbSet<MuscleGroup> MuscleGroups { get; set; }
         
         public DbSet<SessionExercise>  SessionExercises { get; set; }
+
+        public DbSet<RoutineExercise> RoutineExercises { get; set; }
 
         public DbSet<PasswordResetToken> ResetTokens { get; set; }
 
@@ -27,6 +31,14 @@ namespace WorkoutApplication.Shared.Data
                 .HasKey(x => x.SessionId);
 
             modelBuilder.Entity<WorkoutSession>()
+                .HasOne<User>()
+                .WithMany()
+                .HasForeignKey(w => w.UserId);
+
+            modelBuilder.Entity<Routine>()
+                .HasKey(x => x.RoutineId);
+
+            modelBuilder.Entity<Routine>()
                 .HasOne<User>()
                 .WithMany()
                 .HasForeignKey(w => w.UserId);
@@ -117,6 +129,21 @@ namespace WorkoutApplication.Shared.Data
             .WithMany(u => u.PasswordResetTokens)
             .HasForeignKey(t => t.UserId)
             .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<RoutineExercise>()
+                .HasOne<Routine>()
+                .WithMany()
+                .HasForeignKey(x => x.RoutineId);
+
+            modelBuilder.Entity<RoutineExercise>()
+                .HasOne<Exercise>()
+                .WithMany()
+                .HasForeignKey(x => x.ExerciseId);
+
+            modelBuilder.Entity<RoutineExercise>()
+            .HasOne(re => re.Exercise)
+            .WithMany()
+            .HasForeignKey(re => re.ExerciseId);
         }
     }
 }

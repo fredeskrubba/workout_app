@@ -22,6 +22,8 @@ using WorkoutApplication.Modules.Users.Features.PasswordReset.ForgotUserPassword
 using WorkoutApplication.Modules.Exercises;
 using WorkoutApplication.Modules.Exercises.Features.GetAllExercises;
 using WorkoutApplication.Shared.Services.Email;
+using WorkoutApplication.Modules.Routines.Features.CreateRoutine;
+using WorkoutApplication.Modules.Routines.Features.AddExerciseToRoutine;
 using WorkoutApplication.Modules.Routines;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -90,4 +92,6 @@ api.MapGetAllSessionExercisesEndpoint();
 api.MapForgotUserPasswordEndpoint();
 api.MapResetUserPasswordEndpoint();
 api.MapGetAllExercisesEndpoint();
+api.MapCreateRoutineEndpoint();
+api.MapAddExerciseToRoutineEndpoint();
 app.Run();

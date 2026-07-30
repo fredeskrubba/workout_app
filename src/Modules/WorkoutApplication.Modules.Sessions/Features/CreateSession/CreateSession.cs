@@ -15,9 +15,9 @@ public class CreateSession
         _context = context;
     }
 
-    public async Task<Result<CreateSessionResponse>> Handle(CreateSessionRequest request)
+    public async Task<Result<CreateSessionResponse>> Handle(CreateSessionRequest request, int loggedInUserId)
     {
-        var user = await _context.Users.FirstOrDefaultAsync(x => x.UserId == request.UserId);
+        var user = await _context.Users.FirstOrDefaultAsync(x => x.UserId == loggedInUserId);
 
         if (user is null)
         {
@@ -36,7 +36,7 @@ public class CreateSession
 
         WorkoutSession session = new()
         {
-            UserId = user.UserId,
+            UserId = loggedInUserId,
             Date =  request.Date,
             DurationSeconds = request.DurationSeconds,
             Rating = request.Rating,

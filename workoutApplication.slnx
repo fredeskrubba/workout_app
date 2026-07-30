@@ -1,11 +1,9 @@
 <Solution>
-  <Folder Name="/Tests/">
-    <Project Path="WorkoutApplication.Modules.Users.Test/WorkoutApplication.Modules.Users.Test.csproj" Id="00aef4e2-2733-4083-8360-e8d8d27e701a" />
-  </Folder>
   <Project Path="src/Modules/WorkoutApplication.Modules.Exercises/WorkoutApplication.Modules.Exercises.csproj" />
   <Project Path="src/Modules/WorkoutApplication.Modules.Routines/WorkoutApplication.Modules.Routines.csproj" />
   <Project Path="src/Modules/WorkoutApplication.Modules.Sessions/WorkoutApplication.Modules.Sessions.csproj" />
   <Project Path="src/Modules/WorkoutApplication.Modules.Users/WorkoutApplication.Modules.Users.csproj" Id="b75c6e68-a108-45ad-9ad2-f5651e98c0ca" />
   <Project Path="src/Modules/WorkoutApplication.Shared/WorkoutApplication.Shared.csproj" />
   <Project Path="src/WorkoutApplication/WorkoutApplication.csproj" />
+  <Project Path="WorkoutApplication.Modules.Users.Test/WorkoutApplication.Modules.Users.Test.csproj" Id="00aef4e2-2733-4083-8360-e8d8d27e701a" />
 </Solution>

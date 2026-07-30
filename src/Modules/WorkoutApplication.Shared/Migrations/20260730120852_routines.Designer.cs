@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using WorkoutApplication.Shared.Data;
@@ -11,9 +12,11 @@ using WorkoutApplication.Shared.Data;
 namespace WorkoutApplication.Shared.Migrations
 {
     [DbContext(typeof(WorkoutApplicationDBContext))]
-    partial class WorkoutApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20260730120852_routines")]
+    partial class routines
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -174,17 +177,13 @@ namespace WorkoutApplication.Shared.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("routine_id");
 
-                    b.Property<int?>("SeatSetting")
-                        .HasColumnType("integer")
-                        .HasColumnName("seat_setting");
-
                     b.Property<int>("Sets")
                         .HasColumnType("integer")
-                        .HasColumnName("sets");
+                        .HasColumnName("Sets");
 
                     b.Property<double>("Weight")
                         .HasColumnType("double precision")
-                        .HasColumnName("weight");
+                        .HasColumnName("Weight");
 
                     b.HasKey("RoutineExerciseId");
 
@@ -192,7 +191,7 @@ namespace WorkoutApplication.Shared.Migrations
 
                     b.HasIndex("RoutineId");
 
-                    b.ToTable("routine_exercises");
+                    b.ToTable("RoutineExercises");
                 });
 
             modelBuilder.Entity("WorkoutApplication.Shared.Entities.SessionExercise", b =>
