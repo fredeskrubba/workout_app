@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using WorkoutApplication.Modules.Routines.Features.AddExerciseToRoutine;
 using WorkoutApplication.Modules.Routines.Features.CreateRoutine;
+using WorkoutApplication.Modules.Routines.Features.GetAllRoutineExercises;
 
 namespace WorkoutApplication.Modules.Routines
 {
@@ -10,6 +11,7 @@ namespace WorkoutApplication.Modules.Routines
         {
             services.AddScoped<CreateRoutine>();
             services.AddScoped<AddExerciseToRoutine>();
+            services.AddScoped<GetAllRoutineExercises>();
             return services;
         }
     }

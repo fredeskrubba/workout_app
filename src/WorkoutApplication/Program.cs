@@ -25,6 +25,7 @@ using WorkoutApplication.Shared.Services.Email;
 using WorkoutApplication.Modules.Routines.Features.CreateRoutine;
 using WorkoutApplication.Modules.Routines.Features.AddExerciseToRoutine;
 using WorkoutApplication.Modules.Routines;
+using WorkoutApplication.Modules.Routines.Features.GetAllRoutineExercises;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -94,4 +95,5 @@ api.MapResetUserPasswordEndpoint();
 api.MapGetAllExercisesEndpoint();
 api.MapCreateRoutineEndpoint();
 api.MapAddExerciseToRoutineEndpoint();
+api.MapGetAllRoutineExercisesEndpoint();
 app.Run();
