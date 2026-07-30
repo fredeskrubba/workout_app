@@ -26,6 +26,8 @@ using WorkoutApplication.Modules.Routines.Features.CreateRoutine;
 using WorkoutApplication.Modules.Routines.Features.AddExerciseToRoutine;
 using WorkoutApplication.Modules.Routines;
 using WorkoutApplication.Modules.Routines.Features.GetAllRoutineExercises;
+using WorkoutApplication.Modules.Routines.Features.DeleteRoutine;
+using WorkoutApplication.Modules.Routines.Features.GetAllUserRoutines;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -96,4 +98,6 @@ api.MapGetAllExercisesEndpoint();
 api.MapCreateRoutineEndpoint();
 api.MapAddExerciseToRoutineEndpoint();
 api.MapGetAllRoutineExercisesEndpoint();
+api.MapDeleteRoutineEndpoint();
+api.MapGetAllUserRoutinesEndpoint();
 app.Run();

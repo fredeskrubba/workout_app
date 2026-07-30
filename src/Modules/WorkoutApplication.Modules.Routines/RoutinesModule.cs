@@ -2,6 +2,8 @@
 using WorkoutApplication.Modules.Routines.Features.AddExerciseToRoutine;
 using WorkoutApplication.Modules.Routines.Features.CreateRoutine;
 using WorkoutApplication.Modules.Routines.Features.GetAllRoutineExercises;
+using WorkoutApplication.Modules.Routines.Features.DeleteRoutine;
+using WorkoutApplication.Modules.Routines.Features.GetAllUserRoutines;
 
 namespace WorkoutApplication.Modules.Routines
 {
@@ -12,6 +14,8 @@ namespace WorkoutApplication.Modules.Routines
             services.AddScoped<CreateRoutine>();
             services.AddScoped<AddExerciseToRoutine>();
             services.AddScoped<GetAllRoutineExercises>();
+            services.AddScoped<DeleteRoutine>();
+            services.AddScoped<GetAllUserRoutines>();
             return services;
         }
     }
