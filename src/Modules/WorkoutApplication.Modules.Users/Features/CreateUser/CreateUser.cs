@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Text.RegularExpressions;
+using WorkoutApplication.Shared.Data;
 using WorkoutApplication.Shared.Entities;
 using WorkoutApplication.Shared.Results;
-using WorkoutApplication.Shared.Data;
 
 namespace WorkoutApplication.Modules.Users.Features.CreateUser
 {
@@ -17,10 +18,19 @@ namespace WorkoutApplication.Modules.Users.Features.CreateUser
         public async Task<Result<CreateUserResponse>> Handle(CreateUserRequest request)
         {
             var user = new User(request.FirstName, request.LastName, request.Email);
+
+            Regex EmailRegex = new(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", RegexOptions.Compiled);
+            
+            if (!EmailRegex.IsMatch(request.Email))
+            {
+                return Result<CreateUserResponse>.Failure("Email not in a valid format");
+            }
+
             if(await _context.Users.AnyAsync(u => u.Email.ToLower() == request.Email.ToLower()))
             {
                 return Result<CreateUserResponse>.Failure("Email already in use");
             }
+
 
             var hashedPassword = new PasswordHasher<User>()
                 .HashPassword(user, request.Password);
