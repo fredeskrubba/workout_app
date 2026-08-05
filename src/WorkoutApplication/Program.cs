@@ -64,6 +64,16 @@ builder.Services.AddDbContext<WorkoutApplicationDBContext>(options =>
                 builder.Configuration.GetConnectionString("DefaultConnection")
             ));
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("Frontend", policy =>
+    {
+        policy
+            .WithOrigins("http://localhost:8100")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
 
 var app = builder.Build();
 
@@ -78,6 +88,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
 
 var api = app.MapGroup("/api");
 
@@ -100,4 +111,7 @@ api.MapAddExerciseToRoutineEndpoint();
 api.MapGetAllRoutineExercisesEndpoint();
 api.MapDeleteRoutineEndpoint();
 api.MapGetAllUserRoutinesEndpoint();
+
+app.UseCors("Frontend");
+
 app.Run();

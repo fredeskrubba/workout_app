@@ -7,5 +7,6 @@
   <Project Path="src/WorkoutApplication/WorkoutApplication.csproj" />
   <Project Path="WorkoutApplication.Modules.Exercises.Test/WorkoutApplication.Modules.Exercises.Test.csproj" Id="fe4fb4fc-e396-4d6c-a28b-b4bdbe7d0cbf" />
   <Project Path="WorkoutApplication.Modules.Routines.Test/WorkoutApplication.Modules.Routines.Test.csproj" Id="203741f1-5636-45c9-8336-1197aef048c6" />
+  <Project Path="WorkoutApplication.Modules.Sessions.Test/WorkoutApplication.Modules.Sessions.Test.csproj" Id="c3e5e803-bf74-4044-a2fc-a68f83cefbeb" />
   <Project Path="WorkoutApplication.Modules.Users.Test/WorkoutApplication.Modules.Users.Test.csproj" Id="00aef4e2-2733-4083-8360-e8d8d27e701a" />
 </Solution>
