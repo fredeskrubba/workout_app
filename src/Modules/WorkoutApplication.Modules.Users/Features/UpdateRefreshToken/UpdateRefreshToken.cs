@@ -1,7 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using WorkoutApplication.Shared.Entities;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using WorkoutApplication.Modules.Users.Helpers;
 using WorkoutApplication.Shared.Data;
+using WorkoutApplication.Shared.Entities;
 using WorkoutApplication.Shared.Results;
 
 namespace WorkoutApplication.Modules.Users.Features.UpdateRefreshToken
@@ -17,9 +18,10 @@ namespace WorkoutApplication.Modules.Users.Features.UpdateRefreshToken
             _tokenHelper = tokenHelper;
         }
 
-        public async Task<Result<UpdateRefreshTokenResponse>> Handle(UpdateRefreshTokenRequest request)
+        public async Task<Result<UpdateRefreshTokenResponse>> Handle(UpdateRefreshTokenRequest request, HttpContext httpContext)
         {
-            var user = await ValidateRefreshTokenAsync(request.UserId, request.RefreshToken);
+            var refreshToken = httpContext.Request.Cookies["refreshToken"];
+            var user = await ValidateRefreshTokenAsync(refreshToken);
 
             if(user is null )
             {
@@ -28,7 +30,7 @@ namespace WorkoutApplication.Modules.Users.Features.UpdateRefreshToken
 
             var accessToken = _tokenHelper.CreateToken(user);
 
-            var refreshToken = _tokenHelper.GenerateRefreshToken();
+            var newRefreshToken = _tokenHelper.GenerateRefreshToken();
             user.RefreshToken = refreshToken;
             user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
 
@@ -41,13 +43,26 @@ namespace WorkoutApplication.Modules.Users.Features.UpdateRefreshToken
                 return Result<UpdateRefreshTokenResponse>.Failure("Something went wrong, see error: " + ex.Message);
             }
 
+            httpContext.Response.Cookies.Append(
+                "refreshToken",
+                newRefreshToken,
+                new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    SameSite = SameSiteMode.Strict,
+                    Expires = DateTimeOffset.UtcNow.AddDays(7)
+                }
+            );
+
             return Result<UpdateRefreshTokenResponse>.Success(new UpdateRefreshTokenResponse(accessToken, refreshToken));
         }
 
 
-        private async Task<User?> ValidateRefreshTokenAsync(int userId, string refreshToken)
+        private async Task<User?> ValidateRefreshTokenAsync(string refreshToken)
         {
-            var user = await _context.Users.FindAsync(userId);
+            var user = await _context.Users
+        .SingleOrDefaultAsync(u => u.RefreshToken == refreshToken);
 
             if (user is null || user.RefreshToken != refreshToken || user.RefreshTokenExpiryTime <= DateTime.UtcNow)
             {

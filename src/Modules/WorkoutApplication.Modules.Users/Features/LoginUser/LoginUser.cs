@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using WorkoutApplication.Shared.Entities;
 using WorkoutApplication.Modules.Users.Helpers;
 using WorkoutApplication.Shared.Data;
+using WorkoutApplication.Shared.Entities;
 using WorkoutApplication.Shared.Results;
 
 
@@ -19,7 +20,7 @@ namespace WorkoutApplication.Modules.Users.Features.LoginUser
             _context = context;
             _tokenHelper = tokenHelper;
         }
-        public async Task<Result<LoginUserResponse>> Handle(LoginUserRequest request)
+        public async Task<Result<LoginUserResponse>> Handle(LoginUserRequest request, HttpContext httpContext)
         {
             
             var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == request.Email);
@@ -49,7 +50,20 @@ namespace WorkoutApplication.Modules.Users.Features.LoginUser
                 return Result<LoginUserResponse>.Failure("Something went wrong, see error: " + ex.Message);
             }
 
-            return Result<LoginUserResponse>.Success(new LoginUserResponse(_tokenHelper.CreateToken(user), refreshToken));
+            httpContext.Response.Cookies.Append(
+                "refreshToken",
+                refreshToken,
+                new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    SameSite = SameSiteMode.Strict,
+                    Expires = DateTimeOffset.UtcNow.AddDays(7),
+                    Path = "/api/auth"
+                }
+            );
+
+            return Result<LoginUserResponse>.Success(new LoginUserResponse(_tokenHelper.CreateToken(user)));
         }
 
 
