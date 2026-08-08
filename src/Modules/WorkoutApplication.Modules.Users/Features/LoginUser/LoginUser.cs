@@ -59,7 +59,7 @@ namespace WorkoutApplication.Modules.Users.Features.LoginUser
                     Secure = true,
                     SameSite = SameSiteMode.Strict,
                     Expires = DateTimeOffset.UtcNow.AddDays(7),
-                    Path = "/api/auth"
+                    Path = "/api/login"
                 }
             );
 
