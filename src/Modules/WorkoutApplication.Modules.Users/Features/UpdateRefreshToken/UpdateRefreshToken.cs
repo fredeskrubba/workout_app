@@ -55,7 +55,7 @@ namespace WorkoutApplication.Modules.Users.Features.UpdateRefreshToken
                 }
             );
 
-            return Result<UpdateRefreshTokenResponse>.Success(new UpdateRefreshTokenResponse(accessToken, refreshToken));
+            return Result<UpdateRefreshTokenResponse>.Success(new UpdateRefreshTokenResponse(accessToken));
         }
 
 

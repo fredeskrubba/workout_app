@@ -17,7 +17,7 @@ namespace WorkoutApplication.Modules.Users.Features.UpdateRefreshToken
                 if (result.IsSuccess)
                 {
 
-                    return Results.Ok(result.Value.RefreshToken);
+                    return Results.Ok(result.Value);
 
                 }
                 else

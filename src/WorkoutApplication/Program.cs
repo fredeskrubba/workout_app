@@ -52,6 +52,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         ValidateAudience = true,
         ValidAudience = builder.Configuration["AppSettings:Audience"],
         ValidateLifetime = true,
+        ClockSkew = TimeSpan.Zero,
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["AppSettings:Token"])),
         ValidateIssuerSigningKey = true
 
@@ -71,7 +72,8 @@ builder.Services.AddCors(options =>
         policy
             .WithOrigins("http://localhost:8100")
             .AllowAnyHeader()
-            .AllowAnyMethod();
+            .AllowAnyMethod()
+            .AllowCredentials();
     });
 });
 
@@ -83,6 +85,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
+app.UseCors("Frontend");
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
@@ -112,6 +115,5 @@ api.MapGetAllRoutineExercisesEndpoint();
 api.MapDeleteRoutineEndpoint();
 api.MapGetAllUserRoutinesEndpoint();
 
-app.UseCors("Frontend");
 
 app.Run();
