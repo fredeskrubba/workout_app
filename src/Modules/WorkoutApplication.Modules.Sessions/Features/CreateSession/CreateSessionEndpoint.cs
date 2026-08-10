@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace WorkoutApplication.Modules.Sessions.Features.CreateSession;
 
@@ -12,7 +13,7 @@ public static class CreateSessionEndpoint
         app.MapPost("/session", async (CreateSession handler, CreateSessionRequest request, ClaimsPrincipal user) =>
         {
 
-            var loggedInUserId = user.FindFirstValue(ClaimTypes.NameIdentifier);
+            var loggedInUserId = user.FindFirstValue(JwtRegisteredClaimNames.Sub);
             var result = await handler.Handle(request, Int32.Parse(loggedInUserId));
 
             if (!result.IsSuccess)

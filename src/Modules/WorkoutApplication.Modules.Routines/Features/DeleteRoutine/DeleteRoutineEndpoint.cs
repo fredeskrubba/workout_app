@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace WorkoutApplication.Modules.Routines.Features.DeleteRoutine;
 
@@ -11,7 +12,7 @@ public static class DeleteRoutineEndpoint
     {
         app.MapDelete("/routine/{routineId}", async (DeleteRoutine handler, int routineId, ClaimsPrincipal user) =>
         {
-            var loggedInUserId = user.FindFirstValue(ClaimTypes.NameIdentifier);
+            var loggedInUserId = user.FindFirstValue(JwtRegisteredClaimNames.Sub);
             var request = new DeleteRoutineRequest(routineId, loggedInUserId);
             var result = await handler.Handle(request);
 

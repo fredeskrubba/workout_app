@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
 using WorkoutApplication.Modules.Users.Features.DeleteUser;
 
 namespace WorkoutApplication.Modules.Users.Features.UpdateUserPassword
@@ -13,7 +14,7 @@ namespace WorkoutApplication.Modules.Users.Features.UpdateUserPassword
             app.MapPut("/password", async (UpdateUserPassword handler, UpdateUserPasswordRequest request, ClaimsPrincipal user) =>
             {
 
-                var loggedInUserId = user.FindFirstValue(ClaimTypes.NameIdentifier);
+                var loggedInUserId = user.FindFirstValue(JwtRegisteredClaimNames.Sub);
 
                 var result = await handler.Handle(request, loggedInUserId);
                

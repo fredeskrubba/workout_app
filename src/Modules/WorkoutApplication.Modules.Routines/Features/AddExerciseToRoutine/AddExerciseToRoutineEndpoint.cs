@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace WorkoutApplication.Modules.Routines.Features.AddExerciseToRoutine
 {
@@ -11,7 +12,7 @@ namespace WorkoutApplication.Modules.Routines.Features.AddExerciseToRoutine
         {
             app.MapPost("/routine/{routineId:int}/exercise", async (AddExerciseToRoutine handler, AddExerciseToRoutineRequest request, int routineId, ClaimsPrincipal user) =>
             {
-                var loggedInUserId = user.FindFirstValue(ClaimTypes.NameIdentifier);
+                var loggedInUserId = user.FindFirstValue(JwtRegisteredClaimNames.Sub);
                 var result = await handler.Handle(request, routineId, Int32.Parse(loggedInUserId));
 
                 if (!result.IsSuccess)

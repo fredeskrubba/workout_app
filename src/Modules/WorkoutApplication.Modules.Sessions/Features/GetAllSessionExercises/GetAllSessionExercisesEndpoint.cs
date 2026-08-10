@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Builder;
 using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace WorkoutApplication.Modules.Sessions.Features.GetAllSessionExercises
 {
@@ -11,7 +12,7 @@ namespace WorkoutApplication.Modules.Sessions.Features.GetAllSessionExercises
         {
             app.MapGet("/session/{sessionId}/exercise", async (GetAllSessionExercises handler, int sessionId, ClaimsPrincipal user) =>
             {
-                var loggedInUserId = user.FindFirstValue(ClaimTypes.NameIdentifier);
+                var loggedInUserId = user.FindFirstValue(JwtRegisteredClaimNames.Sub);
 
                 var query = new GetAllSessionExercisesRequest(loggedInUserId, sessionId);
 

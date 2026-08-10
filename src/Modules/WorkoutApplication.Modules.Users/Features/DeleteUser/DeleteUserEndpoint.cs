@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace WorkoutApplication.Modules.Users.Features.DeleteUser
 {
@@ -11,7 +12,7 @@ namespace WorkoutApplication.Modules.Users.Features.DeleteUser
         {
             app.MapDelete("/users/{id:int}", async (DeleteUser handler, int id, ClaimsPrincipal user) =>
             {
-                var loggedinUserId = user.FindFirstValue(ClaimTypes.NameIdentifier);
+                var loggedinUserId = user.FindFirstValue(JwtRegisteredClaimNames.Sub);
                 var query = new DeleteUserRequest(id, loggedinUserId);
 
                 var result = await handler.Handle(query);

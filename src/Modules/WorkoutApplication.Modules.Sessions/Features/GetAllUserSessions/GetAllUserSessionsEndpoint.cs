@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Builder;
 using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
 namespace WorkoutApplication.Modules.Sessions.Features.GetAllUserSessions;
 
 public static class GetAllUserSessionsEndpoint
@@ -10,7 +11,7 @@ public static class GetAllUserSessionsEndpoint
     {
         app.MapGet("/session", async (GetAllUserSessions handler, ClaimsPrincipal user) =>
         {
-            var loggedInUserId = user.FindFirstValue(ClaimTypes.NameIdentifier);
+            var loggedInUserId = user.FindFirstValue(JwtRegisteredClaimNames.Sub);
 
             var query = new GetAllUserSessionsRequest(loggedInUserId);
 

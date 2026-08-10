@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace WorkoutApplication.Modules.Routines.Features.GetAllUserRoutines;
 
@@ -11,7 +12,7 @@ public static class GetAllUserRoutinesEndpoint
     {
         app.MapGet("/routine", async (GetAllUserRoutines handler, ClaimsPrincipal user) =>
         {
-            var loggedInUserId = user.FindFirstValue(ClaimTypes.NameIdentifier);
+            var loggedInUserId = user.FindFirstValue(JwtRegisteredClaimNames.Sub);
             var query = new GetAllUserRoutinesRequest(loggedInUserId);
 
             var result = await handler.Handle(query);

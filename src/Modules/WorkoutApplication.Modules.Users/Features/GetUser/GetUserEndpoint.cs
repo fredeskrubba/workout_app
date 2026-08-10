@@ -19,7 +19,7 @@ public static class GetUserEndpoint
                 return Results.BadRequest("User not found");
             }
 
-            return Results.Ok(result);
+            return Results.Ok(result.Value);
         }).RequireAuthorization();
     }
 }

@@ -1,34 +1,35 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using WorkoutApplication.Modules.Users;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
+using WorkoutApplication.Modules.Exercises;
+using WorkoutApplication.Modules.Exercises.Features.GetAllExercises;
+using WorkoutApplication.Modules.Routines;
+using WorkoutApplication.Modules.Routines.Features.AddExerciseToRoutine;
+using WorkoutApplication.Modules.Routines.Features.CreateRoutine;
+using WorkoutApplication.Modules.Routines.Features.DeleteRoutine;
+using WorkoutApplication.Modules.Routines.Features.GetAllRoutineExercises;
+using WorkoutApplication.Modules.Routines.Features.GetAllUserRoutines;
 using WorkoutApplication.Modules.Sessions;
+using WorkoutApplication.Modules.Sessions.Features.AddExerciseToSession;
+using WorkoutApplication.Modules.Sessions.Features.CreateSession;
+using WorkoutApplication.Modules.Sessions.Features.DeleteSession;
+using WorkoutApplication.Modules.Sessions.Features.GetAllSessionExercises;
+using WorkoutApplication.Modules.Sessions.Features.GetAllUserSessions;
+using WorkoutApplication.Modules.Users;
 using WorkoutApplication.Modules.Users.Features.CreateUser;
 using WorkoutApplication.Modules.Users.Features.DeleteUser;
 using WorkoutApplication.Modules.Users.Features.GetUser;
 using WorkoutApplication.Modules.Users.Features.LoginUser;
-using WorkoutApplication.Modules.Users.Features.UpdateUserPassword;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using WorkoutApplication.Modules.Sessions.Features.AddExerciseToSession;
-using WorkoutApplication.Modules.Sessions.Features.CreateSession;
-using WorkoutApplication.Modules.Sessions.Features.DeleteSession;
-using WorkoutApplication.Modules.Sessions.Features.GetAllUserSessions;
+using WorkoutApplication.Modules.Users.Features.LogoutUser;
+using WorkoutApplication.Modules.Users.Features.PasswordReset.ForgotUserPassword;
+using WorkoutApplication.Modules.Users.Features.PasswordReset.ResetUserPassword;
 using WorkoutApplication.Modules.Users.Features.UpdateRefreshToken;
+using WorkoutApplication.Modules.Users.Features.UpdateUserPassword;
 using WorkoutApplication.Modules.Users.Helpers;
 using WorkoutApplication.Shared.Data;
-using WorkoutApplication.Modules.Sessions.Features.GetAllSessionExercises;
-using WorkoutApplication.Modules.Users.Features.PasswordReset.ResetUserPassword;
-using WorkoutApplication.Modules.Users.Features.PasswordReset.ForgotUserPassword;
-using WorkoutApplication.Modules.Exercises;
-using WorkoutApplication.Modules.Exercises.Features.GetAllExercises;
 using WorkoutApplication.Shared.Services.Email;
-using WorkoutApplication.Modules.Routines.Features.CreateRoutine;
-using WorkoutApplication.Modules.Routines.Features.AddExerciseToRoutine;
-using WorkoutApplication.Modules.Routines;
-using WorkoutApplication.Modules.Routines.Features.GetAllRoutineExercises;
-using WorkoutApplication.Modules.Routines.Features.DeleteRoutine;
-using WorkoutApplication.Modules.Routines.Features.GetAllUserRoutines;
-using WorkoutApplication.Modules.Users.Features.LogoutUser;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,7 +44,7 @@ builder.Services.AddExercisesModule();
 builder.Services.AddRoutinesModule();
 builder.Services.AddScoped<IEmailService, EmailService>();
 
-
+JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters

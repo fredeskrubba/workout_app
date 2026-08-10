@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
 namespace WorkoutApplication.Modules.Sessions.Features.DeleteSession;
 
 public static class DeleteSessionEndpoint
@@ -10,7 +11,7 @@ public static class DeleteSessionEndpoint
     {
         app.MapDelete("/session/{sessionId}", async (DeleteSession handler, int sessionId, ClaimsPrincipal user) =>
         {
-            var loggedinUserId = user.FindFirstValue(ClaimTypes.NameIdentifier);
+            var loggedinUserId = user.FindFirstValue(JwtRegisteredClaimNames.Sub);
             
             DeleteSessionRequest request = new(sessionId,  loggedinUserId);
             var result = await handler.Handle(request);

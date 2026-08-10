@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Builder;
 using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace WorkoutApplication.Modules.Sessions.Features.AddExerciseToSession;
 
@@ -11,7 +12,7 @@ public static class AddExerciseToSessionEndpoint
     {
         app.MapPost("/session/{sessionId:int}/exercise", async (AddExerciseToSession handler, ClaimsPrincipal user, int sessionId, AddExerciseToSessionRequest request) =>
         {
-            var loggedInUserId = user.FindFirstValue(ClaimTypes.NameIdentifier);
+            var loggedInUserId = user.FindFirstValue(JwtRegisteredClaimNames.Sub);
 
             
             var result = await handler.Handle(request, sessionId, loggedInUserId);
